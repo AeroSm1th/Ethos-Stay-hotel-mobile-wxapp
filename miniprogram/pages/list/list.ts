@@ -360,19 +360,25 @@ Page<ListPageData, {}>({
     const { tag } = e.currentTarget.dataset;
     const { selectedTags } = this.data;
 
-    console.log('点击标签:', tag);
+    console.log('=== 列表页标签点击 ===');
+    console.log('点击的标签:', tag);
+    console.log('点击前 selectedTags:', JSON.stringify(selectedTags));
 
     // 切换标签选中状态
     let newSelectedTags: string[];
     if (selectedTags.includes(tag)) {
       // 取消选中
       newSelectedTags = selectedTags.filter((t) => t !== tag);
+      console.log('取消选中，新数组:', JSON.stringify(newSelectedTags));
     } else {
       // 选中
       newSelectedTags = [...selectedTags, tag];
+      console.log('添加选中，新数组:', JSON.stringify(newSelectedTags));
     }
 
-    this.setData({ selectedTags: newSelectedTags });
+    this.setData({ selectedTags: newSelectedTags }, () => {
+      console.log('setData 完成后 data.selectedTags:', JSON.stringify(this.data.selectedTags));
+    });
 
     // 执行筛选
     this.filterHotelsByTags(newSelectedTags);

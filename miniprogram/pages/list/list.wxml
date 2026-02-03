@@ -1,4 +1,5 @@
 <!--pages/list/list.wxml-->
+<wxs module="listUtils" src="./list.wxs"></wxs>
 <view class="container">
   <!-- 顶部筛选条件展示区域 -->
   <view class="filter-header" bindtap="showFilterModal">
@@ -31,7 +32,7 @@
   </view>
 
   <!-- 星级筛选 -->
-  <view class="filter-section" wx:if="{{!loading && hotels.length > 0}}">
+  <view class="filter-section" wx:if="{{!loading}}">
     <view class="filter-title">星级</view>
     <view class="filter-options">
       <block wx:for="{{starOptions}}" wx:key="value">
@@ -47,7 +48,7 @@
   </view>
 
   <!-- 价格筛选 -->
-  <view class="filter-section" wx:if="{{!loading && hotels.length > 0}}">
+  <view class="filter-section" wx:if="{{!loading}}">
     <view class="filter-title">价格</view>
     <view class="filter-options">
       <block wx:for="{{priceOptions}}" wx:key="*this">
@@ -66,7 +67,7 @@
   <view class="quick-tags" wx:if="{{!loading && quickTags.length > 0}}">
     <block wx:for="{{quickTags}}" wx:key="*this">
       <view 
-        class="tag-item {{selectedTags.includes(item) ? 'active' : ''}}"
+        class="tag-item {{listUtils.isTagSelected(selectedTags, item) ? 'active' : ''}}"
         data-tag="{{item}}"
         bindtap="handleTagClick"
       >
