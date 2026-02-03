@@ -1,4 +1,5 @@
 <!--pages/search/search.wxml-->
+<wxs module="searchUtils" src="./search.wxs"></wxs>
 <view class="search-page">
   <!-- 顶部 Banner -->
   <view class="banner-section" wx:if="{{bannerHotels.length > 0}}">
@@ -109,7 +110,7 @@
       <view class="filter-title">设施</view>
       <view class="tag-list">
         <view 
-          class="tag-item {{selectedTags.indexOf(item) > -1 ? 'active' : ''}}"
+          class="tag-item {{searchUtils.isTagSelected(selectedTags, item) ? 'active' : ''}}"
           wx:for="{{quickTags}}"
           wx:key="*this"
           data-tag="{{item}}"

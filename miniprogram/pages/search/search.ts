@@ -335,26 +335,17 @@ Page<SearchPageData, {}>({
     const tag = e.currentTarget.dataset.tag as string;
     const { selectedTags } = this.data;
 
-    console.log('点击标签:', tag);
-    console.log('当前选中的标签:', selectedTags);
-
     const index = selectedTags.indexOf(tag);
     if (index > -1) {
       // 已选中，取消选中
       selectedTags.splice(index, 1);
-      console.log('取消选中:', tag);
     } else {
       // 未选中，添加选中
       selectedTags.push(tag);
-      console.log('添加选中:', tag);
     }
-
-    console.log('更新后的标签:', selectedTags);
 
     this.setData({
       selectedTags: [...selectedTags],
-    }, () => {
-      console.log('setData 完成，当前 data.selectedTags:', this.data.selectedTags);
     });
     
     // 不立即重新加载推荐酒店，只在点击"搜索酒店"按钮时才筛选

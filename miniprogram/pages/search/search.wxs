@@ -1,0 +1,27 @@
+/**
+ * 搜索页 WXS 工具函数
+ */
+
+/**
+ * 判断标签是否被选中
+ * @param {Array} selectedTags 已选中的标签数组
+ * @param {string} tag 当前标签
+ * @returns {boolean} 是否选中
+ */
+function isTagSelected(selectedTags, tag) {
+  if (!selectedTags || selectedTags.length === 0) {
+    return false;
+  }
+  
+  for (var i = 0; i < selectedTags.length; i++) {
+    if (selectedTags[i] === tag) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+module.exports = {
+  isTagSelected: isTagSelected
+};
