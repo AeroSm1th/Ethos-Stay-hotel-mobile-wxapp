@@ -1,7 +1,182 @@
 /* pages/list/list.wxss */
 
-.placeholder {
-  padding: var(--spacing-xl);
+.container {
+  min-height: 100vh;
+  background-color: var(--bg-secondary);
+}
+
+/* 顶部筛选条件展示 */
+.filter-header {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-md);
+  border-bottom: 1rpx solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.filter-info .city {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.filter-info .date {
+  color: var(--text-secondary);
+}
+
+.filter-info .nights {
+  color: var(--primary-color);
+}
+
+.filter-edit {
+  padding: var(--spacing-xs);
+}
+
+.edit-icon {
+  font-size: 32rpx;
+}
+
+/* 酒店总数 */
+.hotel-count {
+  padding: var(--spacing-md);
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
+}
+
+/* 排序栏 */
+.sort-bar {
+  display: flex;
+  background-color: var(--bg-primary);
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.sort-item {
+  flex: 1;
   text-align: center;
+  padding: var(--spacing-md);
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  position: relative;
+}
+
+.sort-item.active {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.sort-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 4rpx;
+  background-color: var(--primary-color);
+  border-radius: 2rpx;
+}
+
+/* 快捷标签 */
+.quick-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background-color: var(--bg-primary);
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.tag-item {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border: 1rpx solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.tag-item.active {
+  background-color: var(--primary-color);
+  color: var(--bg-primary);
+  border-color: var(--primary-color);
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xl);
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+/* 错误提示 */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xl);
+  gap: var(--spacing-md);
+}
+
+.error-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+.retry-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--primary-color);
+  color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  font-size: 28rpx;
+}
+
+/* 酒店列表 */
+.hotel-list {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+/* 加载更多状态 */
+.load-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md);
+}
+
+.load-more-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+/* 没有更多数据 */
+.no-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md);
+}
+
+.no-more-text {
+  font-size: 28rpx;
   color: var(--text-tertiary);
 }

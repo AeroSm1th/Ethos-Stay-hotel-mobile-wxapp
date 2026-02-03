@@ -1,4 +1,77 @@
 <!--pages/list/list.wxml-->
 <view class="container">
-  <view class="placeholder">酒店列表页</view>
+  <!-- 顶部筛选条件展示区域 -->
+  <view class="filter-header" bindtap="showFilterModal">
+    <view class="filter-info">
+      <text class="city">{{filters.city}}</text>
+      <text class="date">{{filters.checkIn}} - {{filters.checkOut}}</text>
+      <text class="nights">共{{nights}}晚</text>
+    </view>
+    <view class="filter-edit">
+      <text class="edit-icon">✏️</text>
+    </view>
+  </view>
+
+  <!-- 酒店总数 -->
+  <view class="hotel-count" wx:if="{{!loading && total > 0}}">
+    <text>共找到 {{total}} 家酒店</text>
+  </view>
+
+  <!-- 排序选项 -->
+  <view class="sort-bar" wx:if="{{!loading && hotels.length > 0}}">
+    <block wx:for="{{sortOptions}}" wx:key="key">
+      <view 
+        class="sort-item {{sortBy === item.key ? 'active' : ''}}"
+        data-sortby="{{item.key}}"
+        bindtap="handleSort"
+      >
+        <text>{{item.label}}</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 快捷标签 -->
+  <view class="quick-tags" wx:if="{{!loading && quickTags.length > 0}}">
+    <block wx:for="{{quickTags}}" wx:key="*this">
+      <view 
+        class="tag-item {{selectedTags.includes(item) ? 'active' : ''}}"
+        data-tag="{{item}}"
+        bindtap="handleTagClick"
+      >
+        <text>{{item}}</text>
+      </view>
+    </block>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 错误提示 -->
+  <view class="error-container" wx:if="{{!loading && error}}">
+    <text class="error-text">{{error}}</text>
+    <button class="retry-btn" bindtap="loadHotels" data-append="{{false}}">重试</button>
+  </view>
+
+  <!-- 酒店列表 -->
+  <view class="hotel-list" wx:if="{{!loading && hotels.length > 0}}">
+    <block wx:for="{{hotels}}" wx:key="id">
+      <hotel-card 
+        hotel="{{item}}" 
+        show-price="{{true}}"
+        bind:click="handleHotelClick"
+      />
+    </block>
+  </view>
+
+  <!-- 加载更多状态 -->
+  <view class="load-more" wx:if="{{loadingMore}}">
+    <text class="load-more-text">加载中...</text>
+  </view>
+
+  <!-- 没有更多数据 -->
+  <view class="no-more" wx:if="{{!hasMore && hotels.length > 0}}">
+    <text class="no-more-text">没有更多数据了</text>
+  </view>
 </view>

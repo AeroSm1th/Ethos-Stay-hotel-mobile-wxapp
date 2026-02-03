@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "酒店列表",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "hotel-card": "/components/hotel-card/hotel-card"
+  }
 }
