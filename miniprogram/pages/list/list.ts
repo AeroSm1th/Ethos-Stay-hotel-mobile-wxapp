@@ -412,8 +412,10 @@ Page<ListPageData, {}>({
    * 本地排序酒店列表
    */
   sortHotels(sortBy: string) {
-    const { hotels } = this.data;
-    let sortedHotels = [...hotels];
+    const { allHotels, selectedTags } = this.data;
+    
+    // 首先对所有酒店进行排序
+    let sortedHotels = [...allHotels];
 
     switch (sortBy) {
       case 'popular':
@@ -439,7 +441,21 @@ Page<ListPageData, {}>({
         break;
     }
 
-    this.setData({ hotels: sortedHotels });
+    // 更新 allHotels 为排序后的结果
+    this.setData({ allHotels: sortedHotels });
+
+    // 如果有标签筛选，重新应用筛选
+    if (selectedTags.length > 0) {
+      const filteredHotels = sortedHotels.filter((hotel) => {
+        if (!hotel.facilities || hotel.facilities.length === 0) {
+          return false;
+        }
+        return selectedTags.every((tag) => hotel.facilities!.includes(tag));
+      });
+      this.setData({ hotels: filteredHotels });
+    } else {
+      this.setData({ hotels: sortedHotels });
+    }
   },
 
   /**
