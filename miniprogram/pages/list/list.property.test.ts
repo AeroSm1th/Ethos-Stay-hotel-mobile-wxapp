@@ -17,11 +17,11 @@ function generateRoomType(): fc.Arbitrary<RoomType> {
     // 价格可以是数字或字符串
     price: fc.oneof(
       fc.integer({ min: 100, max: 2000 }),
-      fc.integer({ min: 100, max: 2000 }).map(n => n.toString())
+      fc.integer({ min: 100, max: 2000 }).map(n => n.toString()),
     ),
     originalPrice: fc.option(fc.oneof(
       fc.integer({ min: 100, max: 2000 }),
-      fc.integer({ min: 100, max: 2000 }).map(n => n.toString())
+      fc.integer({ min: 100, max: 2000 }).map(n => n.toString()),
     )),
     maxGuests: fc.option(fc.integer({ min: 1, max: 6 })),
     bedType: fc.option(fc.string({ minLength: 1, maxLength: 10 })),
@@ -116,9 +116,9 @@ describe('列表页排序功能属性测试', () => {
 
           // 验证排序结果
           return isPriceSorted(sortedHotels);
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -136,9 +136,9 @@ describe('列表页排序功能属性测试', () => {
 
           // 验证排序结果
           return isIdSorted(sortedHotels);
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -158,9 +158,9 @@ describe('列表页排序功能属性测试', () => {
             sortedByPrice.length === hotels.length &&
             sortedByPopular.length === hotels.length
           );
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -181,9 +181,9 @@ describe('列表页排序功能属性测试', () => {
 
           return originalIds.size === sortedIds.size &&
             [...originalIds].every((id) => sortedIds.has(id));
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 });
@@ -220,7 +220,7 @@ function generateHotelWithFacilities(): fc.Arbitrary<Hotel> {
     starRating: fc.integer({ min: 1, max: 5 }),
     facilities: fc.array(
       fc.constantFrom('免费WiFi', '停车场', '游泳池', '健身房', '餐厅', '会议室', '商务中心', '洗衣服务'),
-      { minLength: 0, maxLength: 8 }
+      { minLength: 0, maxLength: 8 },
     ),
     roomTypes: fc.array(generateRoomType(), { minLength: 1, maxLength: 5 }),
   });
@@ -242,11 +242,11 @@ describe('列表页筛选功能属性测试', () => {
 
           // 验证筛选结果：所有酒店都应该包含该设施
           return filteredHotels.every((hotel) =>
-            hotel.facilities && hotel.facilities.includes(tag)
+            hotel.facilities && hotel.facilities.includes(tag),
           );
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -260,7 +260,7 @@ describe('列表页筛选功能属性测试', () => {
         fc.array(generateHotelWithFacilities(), { minLength: 10, maxLength: 30 }),
         fc.array(
           fc.constantFrom('免费WiFi', '停车场', '游泳池', '健身房', '餐厅'),
-          { minLength: 1, maxLength: 3 }
+          { minLength: 1, maxLength: 3 },
         ),
         (hotels, tags) => {
           // 执行筛选
@@ -268,11 +268,11 @@ describe('列表页筛选功能属性测试', () => {
 
           // 验证筛选结果：所有酒店都应该包含所有选中的设施
           return filteredHotels.every((hotel) =>
-            hotel.facilities && tags.every((tag) => hotel.facilities!.includes(tag))
+            hotel.facilities && tags.every((tag) => hotel.facilities!.includes(tag)),
           );
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -290,9 +290,9 @@ describe('列表页筛选功能属性测试', () => {
 
           // 验证筛选结果：应该返回所有酒店
           return filteredHotels.length === hotels.length;
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 
@@ -306,7 +306,7 @@ describe('列表页筛选功能属性测试', () => {
         fc.array(generateHotelWithFacilities(), { minLength: 5, maxLength: 20 }),
         fc.array(
           fc.constantFrom('免费WiFi', '停车场', '游泳池', '健身房', '餐厅'),
-          { minLength: 1, maxLength: 3 }
+          { minLength: 1, maxLength: 3 },
         ),
         (hotels, tags) => {
           // 执行筛选
@@ -320,9 +320,9 @@ describe('列表页筛选功能属性测试', () => {
           // 验证筛选结果：所有筛选后的酒店都应该在原列表中
           const originalIds = new Set(hotels.map((h) => h.id));
           return filteredHotels.every((hotel) => originalIds.has(hotel.id));
-        }
+        },
       ),
-      { numRuns: 100 }
+      { numRuns: 100 },
     );
   });
 });

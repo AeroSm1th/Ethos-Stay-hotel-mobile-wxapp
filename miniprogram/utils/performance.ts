@@ -11,19 +11,17 @@
  */
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout> | null = null;
 
-  return function (this: any, ...args: Parameters<T>) {
-    const context = this;
-
+  return function (this: unknown, ...args: Parameters<T>) {
     if (timeout !== null) {
       clearTimeout(timeout);
     }
 
     timeout = setTimeout(() => {
-      func.apply(context, args);
+      func.apply(this, args);
       timeout = null;
     }, wait);
   };
@@ -38,13 +36,12 @@ export function debounce<T extends (...args: any[]) => any>(
  */
 export function throttle<T extends (...args: any[]) => any>(
   func: T,
-  wait: number
+  wait: number,
 ): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout> | null = null;
   let previous = 0;
 
-  return function (this: any, ...args: Parameters<T>) {
-    const context = this;
+  return function (this: unknown, ...args: Parameters<T>) {
     const now = Date.now();
 
     if (!previous) {
@@ -59,12 +56,12 @@ export function throttle<T extends (...args: any[]) => any>(
         timeout = null;
       }
       previous = now;
-      func.apply(context, args);
+      func.apply(this, args);
     } else if (!timeout) {
       timeout = setTimeout(() => {
         previous = Date.now();
         timeout = null;
-        func.apply(context, args);
+        func.apply(this, args);
       }, remaining);
     }
   };
@@ -153,8 +150,8 @@ export function delay(ms: number): Promise<void> {
  */
 export async function batchExecute<T>(
   tasks: (() => Promise<T>)[],
-  batchSize: number = 10,
-  delayMs: number = 100
+  batchSize = 10,
+  delayMs = 100,
 ): Promise<T[]> {
   const results: T[] = [];
 

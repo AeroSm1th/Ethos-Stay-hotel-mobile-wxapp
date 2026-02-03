@@ -28,7 +28,7 @@ export class HotelApiService {
       minPrice?: number;
       maxPrice?: number;
     },
-    useCache: boolean = true
+    useCache = true,
   ): Promise<HotelListResponse> {
     // 生成缓存键
     const cacheKey = this.generateCacheKey('hotel-list', params);
@@ -60,7 +60,7 @@ export class HotelApiService {
    * @param useCache 是否使用缓存，默认为 true
    * @returns Promise<Hotel>
    */
-  async getHotelDetail(id: number, useCache: boolean = true): Promise<Hotel> {
+  async getHotelDetail(id: number, useCache = true): Promise<Hotel> {
     // 生成缓存键
     const cacheKey = `hotel-detail-${id}`;
 

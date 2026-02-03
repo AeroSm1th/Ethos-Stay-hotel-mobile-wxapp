@@ -2,10 +2,16 @@
 
 import { Hotel, FilterCriteria } from '../../types/index';
 import { hotelApi } from '../../services/api';
-import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS, ALL_CITIES } from '../../utils/constants';
+import {
+  PAGE_SIZE,
+  SORT_OPTIONS,
+  STAR_OPTIONS,
+  PRICE_OPTIONS,
+  POPULAR_FACILITY_TAGS,
+  ALL_CITIES,
+} from '../../utils/constants';
 import { calculateNights } from '../../utils/format';
-import { showError, showInfo } from '../../utils/toast';
-import { debounce } from '../../utils/performance';
+import { showError } from '../../utils/toast';
 
 /**
  * 列表页数据接口
@@ -39,7 +45,7 @@ interface ListPageData {
 /**
  * 酒店列表页
  */
-Page<ListPageData, {}>({
+Page<ListPageData, Record<string, never>>({
   data: {
     hotels: [],
     total: 0,
@@ -667,7 +673,7 @@ Page<ListPageData, {}>({
     console.log('更新数据...');
     this.setData({ 
       allHotels: sortedHotels,
-      hotels: finalHotels
+      hotels: finalHotels,
     });
     console.log('排序完成');
   },

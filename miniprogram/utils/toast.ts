@@ -8,7 +8,7 @@
  * @param title 提示文本
  * @param duration 持续时间（毫秒），默认 2000
  */
-export function showSuccess(title: string, duration: number = 2000): void {
+export function showSuccess(title: string, duration = 2000): void {
   wx.showToast({
     title,
     icon: 'success',
@@ -22,7 +22,7 @@ export function showSuccess(title: string, duration: number = 2000): void {
  * @param title 提示文本
  * @param duration 持续时间（毫秒），默认 2000
  */
-export function showError(title: string, duration: number = 2000): void {
+export function showError(title: string, duration = 2000): void {
   wx.showToast({
     title,
     icon: 'error',
@@ -36,7 +36,7 @@ export function showError(title: string, duration: number = 2000): void {
  * @param title 提示文本
  * @param duration 持续时间（毫秒），默认 2000
  */
-export function showInfo(title: string, duration: number = 2000): void {
+export function showInfo(title: string, duration = 2000): void {
   wx.showToast({
     title,
     icon: 'none',
@@ -50,7 +50,7 @@ export function showInfo(title: string, duration: number = 2000): void {
  * @param title 提示文本，默认 "加载中..."
  * @param mask 是否显示透明蒙层，默认 true
  */
-export function showLoading(title: string = '加载中...', mask: boolean = true): void {
+export function showLoading(title = '加载中...', mask = true): void {
   wx.showLoading({
     title,
     mask,

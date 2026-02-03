@@ -35,20 +35,20 @@ describe('酒店详情页属性测试', () => {
         fc.tuple(
           fc.integer({ min: 2000, max: 2024 }),
           fc.integer({ min: 1, max: 12 }),
-          fc.integer({ min: 1, max: 28 })
+          fc.integer({ min: 1, max: 28 }),
         ).map(([year, month, day]) => 
-          `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+          `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
         ), 
-        { nil: undefined }
+        { nil: undefined },
       ),
       description: fc.option(fc.string({ minLength: 10, maxLength: 200 }), { nil: undefined }),
       facilities: fc.option(
         fc.uniqueArray(fc.constantFrom('免费WiFi', '停车场', '游泳池', '健身房', 'SPA', '餐厅'), { minLength: 0, maxLength: 6 }),
-        { nil: undefined }
+        { nil: undefined },
       ),
       nearbyAttractions: fc.option(
         fc.array(fc.string({ minLength: 2, maxLength: 20 }), { minLength: 0, maxLength: 5 }),
-        { nil: undefined }
+        { nil: undefined },
       ),
     });
 
@@ -74,7 +74,7 @@ describe('酒店详情页属性测试', () => {
           expect(hotel.starRating).toBeGreaterThanOrEqual(1);
           expect(hotel.starRating).toBeLessThanOrEqual(5);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -84,7 +84,7 @@ describe('酒店详情页属性测试', () => {
           expect(hotel.nameCn).toBeTruthy();
           expect(hotel.nameCn.trim().length).toBeGreaterThan(0);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -95,7 +95,7 @@ describe('酒店详情页属性测试', () => {
           expect(hotel.starRating).toBeLessThanOrEqual(5);
           expect(Number.isInteger(hotel.starRating)).toBe(true);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -105,7 +105,7 @@ describe('酒店详情页属性测试', () => {
           expect(hotel.address).toBeTruthy();
           expect(hotel.address.trim().length).toBeGreaterThan(0);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -145,7 +145,7 @@ describe('酒店详情页属性测试', () => {
             });
           }
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -157,7 +157,7 @@ describe('酒店详情页属性测试', () => {
             expect(uniqueFacilities.size).toBe(hotel.facilities.length);
           }
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -174,7 +174,7 @@ describe('酒店详情页属性测试', () => {
       name: fc.string({ minLength: 2, maxLength: 30 }),
       price: fc.oneof(
         fc.integer({ min: 100, max: 5000 }),
-        fc.integer({ min: 100, max: 5000 }).map(n => n.toString())
+        fc.integer({ min: 100, max: 5000 }).map(n => n.toString()),
       ),
       bedType: fc.option(fc.constantFrom('大床', '双床', '单床'), { nil: undefined }),
       roomSize: fc.option(fc.integer({ min: 15, max: 100 }), { nil: undefined }),
@@ -201,7 +201,7 @@ describe('酒店详情页属性测试', () => {
             expect(priceA).toBeLessThanOrEqual(priceB as number);
           }
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -224,7 +224,7 @@ describe('酒店详情页属性测试', () => {
           
           expect(firstPrice).toBe(minPrice);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -249,7 +249,7 @@ describe('酒店详情页属性测试', () => {
           
           expect(lastPrice).toBe(maxPrice);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -264,7 +264,7 @@ describe('酒店详情页属性测试', () => {
 
           expect(sorted.length).toBe(roomTypes.length);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -285,7 +285,7 @@ describe('酒店详情页属性测试', () => {
             expect(price).toBeGreaterThan(0);
           });
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -301,14 +301,14 @@ describe('酒店详情页属性测试', () => {
       name: fc.string({ minLength: 2, maxLength: 30 }),
       price: fc.oneof(
         fc.integer({ min: 100, max: 5000 }),
-        fc.integer({ min: 100, max: 5000 }).map(n => n.toString())
+        fc.integer({ min: 100, max: 5000 }).map(n => n.toString()),
       ),
       bedType: fc.option(fc.constantFrom('大床', '双床', '单床'), { nil: undefined }),
       roomSize: fc.option(fc.integer({ min: 15, max: 100 }), { nil: undefined }),
       maxGuests: fc.option(fc.integer({ min: 1, max: 4 }), { nil: undefined }),
       amenities: fc.option(
         fc.array(fc.constantFrom('免费WiFi', '空调', '电视', '热水器', '吹风机'), { minLength: 0, maxLength: 5 }),
-        { nil: undefined }
+        { nil: undefined },
       ),
       imageUrl: fc.option(fc.webUrl(), { nil: undefined }),
     });
@@ -333,7 +333,7 @@ describe('酒店详情页属性测试', () => {
           const price = typeof roomType.price === 'string' ? parseFloat(roomType.price) : roomType.price;
           expect(price).toBeGreaterThan(0);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -344,7 +344,7 @@ describe('酒店详情页属性测试', () => {
           expect(price).toBeGreaterThan(0);
           expect(isNaN(price)).toBe(false);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -383,7 +383,7 @@ describe('酒店详情页属性测试', () => {
             expect(typeof roomType.imageUrl).toBe('string');
           }
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -393,7 +393,7 @@ describe('酒店详情页属性测试', () => {
           expect(roomType.name).toBeTruthy();
           expect(roomType.name.trim().length).toBeGreaterThan(0);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -421,7 +421,7 @@ describe('酒店详情页属性测试', () => {
             expect(newCollected).toBe(true);
           }
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -437,7 +437,7 @@ describe('酒店详情页属性测试', () => {
           // 验证回到初始状态
           expect(afterSecondToggle).toBe(initialCollected);
         }),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -466,9 +466,9 @@ describe('酒店详情页属性测试', () => {
 
             // 验证状态已切换
             expect(favorites.has(hotelId)).toBe(!collected);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });

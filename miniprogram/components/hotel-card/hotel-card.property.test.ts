@@ -43,7 +43,7 @@ const hotelArbitrary = fc.record({
       amenities: fc.option(fc.array(fc.string({ minLength: 2, maxLength: 20 }), { minLength: 0, maxLength: 5 })),
       imageUrl: fc.option(fc.webUrl()),
     }),
-    { minLength: 1, maxLength: 10 }
+    { minLength: 1, maxLength: 10 },
   )),
   images: fc.option(fc.array(
     fc.record({
@@ -52,7 +52,7 @@ const hotelArbitrary = fc.record({
       sortOrder: fc.integer({ min: 0, max: 100 }),
       description: fc.option(fc.string({ minLength: 5, maxLength: 50 })),
     }),
-    { minLength: 1, maxLength: 10 }
+    { minLength: 1, maxLength: 10 },
   )),
 }) as fc.Arbitrary<Hotel>;
 

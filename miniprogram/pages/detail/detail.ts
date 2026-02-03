@@ -1,6 +1,6 @@
 // pages/detail/detail.ts
 
-import { DetailPageData, Hotel } from '../../types/index';
+import { DetailPageData } from '../../types/index';
 import { hotelApi } from '../../services/api';
 import { storage } from '../../services/storage';
 import { calculateNights } from '../../utils/format';
@@ -9,7 +9,7 @@ import { showSuccess } from '../../utils/toast';
 /**
  * 酒店详情页
  */
-Page<DetailPageData, {}>({
+Page<DetailPageData, Record<string, never>>({
   data: {
     hotel: null,                // 酒店详情
     loading: true,              // 加载状态

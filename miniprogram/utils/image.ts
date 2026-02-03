@@ -7,7 +7,7 @@
  * @param e 错误事件
  * @param defaultImage 默认图片路径
  */
-export function handleImageError(e: any, defaultImage: string = '/assets/placeholder.png'): void {
+export function handleImageError(e: any, defaultImage = '/assets/placeholder.png'): void {
   const target = e.target || e.currentTarget;
   if (target) {
     target.src = defaultImage;
@@ -88,7 +88,7 @@ export function preloadImages(urls: string[]): Promise<void[]> {
  * @param quality 压缩质量 (0-100)
  * @returns Promise<string> 压缩后的临时文件路径
  */
-export function compressImage(src: string, quality: number = 80): Promise<string> {
+export function compressImage(src: string, quality = 80): Promise<string> {
   return new Promise((resolve, reject) => {
     wx.compressImage({
       src,

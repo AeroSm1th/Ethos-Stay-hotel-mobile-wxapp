@@ -33,7 +33,7 @@ interface SearchPageData {
   quickTags: string[];       // 快捷标签
 }
 
-Page<SearchPageData, {}>({
+Page<SearchPageData, Record<string, never>>({
   /**
    * 页面的初始数据
    */
@@ -227,7 +227,7 @@ Page<SearchPageData, {}>({
       this.setData({ 
         loading: false,
         bannerHotels: [],
-        recommendHotels: []
+        recommendHotels: [],
       });
       showError('加载推荐酒店失败，请检查网络连接');
     }
