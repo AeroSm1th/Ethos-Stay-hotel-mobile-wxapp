@@ -3,6 +3,7 @@
 .search-page {
   height: 100vh;
   background-color: var(--bg-secondary);
+  padding-top: env(safe-area-inset-top);
   padding-bottom: var(--spacing-xl);
 }
 

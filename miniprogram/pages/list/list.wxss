@@ -3,6 +3,7 @@
 .container {
   height: 100vh;
   background-color: var(--bg-secondary);
+  padding-top: env(safe-area-inset-top);
 }
 
 /* 顶部筛选条件展示 */
@@ -13,7 +14,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
 }
 
 .filter-info {
