@@ -1,86 +1,84 @@
 # 更新日志
 
-## [未发布] - 2026-02-03
+## [未发布]
 
 ### 修复
+- **首页选项卡筛选功能** (2026-02-03)
+  - 修复了星级、价格、设施选项卡点击后没有实际筛选效果的问题
+  - 现在点击任何筛选选项卡后，推荐酒店列表会立即根据筛选条件重新加载
+  - 用户可以实时看到筛选效果，提升了用户体验
+  - 相关文件：`miniprogram/pages/search/search.ts`
 
-#### 酒店列表页价格显示问题
+- **酒店列表价格显示问题** (2026-02-03)
+  - 修复了价格显示为 ¥0 的问题
+  - 使用 WXS (WeiXin Script) 直接在模板中计算价格，避免 TypeScript 编译问题
+  - 支持后端返回的字符串格式价格（如 "333.00"）
+  - 相关文件：
+    - `miniprogram/components/hotel-card/hotel-card.wxs` (新建)
+    - `miniprogram/components/hotel-card/hotel-card.wxml`
+    - `miniprogram/components/hotel-card/hotel-card.ts`
+    - `miniprogram/types/index.ts`
 
-**问题描述**：
-- 酒店卡片显示价格为 ¥0
-- 所有酒店星级显示为 2 星
-- 设施标签显示相同
-
-**根本原因**：
-后端 API 返回的房型价格是**字符串格式**（如 `"333.00"`），而前端代码期望的是**数字格式**。这导致：
-1. `Math.min()` 无法正确比较字符串价格
-2. 价格计算返回 `NaN` 或 `0`
-
-**修复内容**：
-
-1. **更新类型定义** (`types/index.ts`)
-   - 将 `RoomType.price` 类型从 `number` 改为 `number | string`
-   - 将 `RoomType.originalPrice` 类型从 `number` 改为 `number | string`
-   - 支持后端返回字符串或数字格式的价格
-
-2. **修复酒店卡片组件** (`components/hotel-card/hotel-card.ts`)
-   - 在 `calculateMinPrice()` 方法中添加价格类型转换
-   - 使用 `parseFloat()` 将字符串价格转换为数字
-   - 添加空数据处理，避免显示 `NaN`
-
-3. **修复列表页排序** (`pages/list/list.ts`)
-   - 在 `getMinPrice()` 方法中添加价格类型转换
-   - 确保价格排序功能正常工作
-
-4. **更新属性测试** (`pages/list/list.property.test.ts`)
-   - 更新测试数据生成器，支持字符串和数字价格
-   - 确保测试覆盖两种价格格式
-
-**测试结果**：
-- ✅ 所有 8 个属性测试通过
-- ✅ 价格正确显示（如 ¥333、¥349 等）
-- ✅ 星级正确显示（根据后端数据）
-- ✅ 设施标签正确显示（根据后端数据）
-
-**技术细节**：
-
-```typescript
-// 修复前
-const prices = hotel.roomTypes.map((room) => room.price);
-const minPrice = Math.min(...prices); // 如果 price 是字符串，返回 NaN
-
-// 修复后
-const prices = hotel.roomTypes.map((room) => {
-  const price = typeof room.price === 'string' ? parseFloat(room.price) : room.price;
-  return price;
-});
-const minPrice = Math.min(...prices); // 正确计算最小值
-```
-
-**影响范围**：
-- 酒店列表页
-- 酒店卡片组件
-- 价格排序功能
-
-**向后兼容性**：
-- ✅ 完全兼容数字格式的价格
-- ✅ 完全兼容字符串格式的价格
-- ✅ 不影响现有功能
-
----
-
-## [1.0.0] - 2026-02-03
+- **列表页 URL 解码问题** (2026-02-03)
+  - 修复了城市名称显示为 URL 编码格式（如 `%E4%B8%8A%E6%B5%B7`）的问题
+  - 在 `list.ts` 的 `onLoad` 方法中添加 `decodeURIComponent()` 解码
+  - 相关文件：`miniprogram/pages/list/list.ts`
 
 ### 新增
+- **酒店列表页** (2026-02-03)
+  - 实现了完整的酒店列表页功能
+  - 支持列表数据加载、筛选条件展示、排序功能
+  - 支持快捷标签筛选、分页加载、下拉刷新
+  - 支持点击跳转详情页
+  - 编写了完整的属性测试（8 个测试全部通过）
+  - 相关文件：
+    - `miniprogram/pages/list/list.ts`
+    - `miniprogram/pages/list/list.wxml`
+    - `miniprogram/pages/list/list.wxss`
+    - `miniprogram/pages/list/list.json`
+    - `miniprogram/pages/list/list.property.test.ts`
 
-- ✅ 实现酒店查询页（首页）
-- ✅ 实现酒店列表页
-- ✅ 实现可复用组件（酒店卡片、日期选择器、筛选栏）
-- ✅ 实现服务层（API、存储、缓存）
-- ✅ 实现工具函数和网络请求封装
-- ✅ 完整的属性测试覆盖
+### 工具
+- **后端连接测试工具** (2026-02-03)
+  - 创建了 `test-backend.js` 用于测试后端 API 连接
+  - 创建了 `README_BACKEND_CONFIG.md` 配置文档
+  - 创建了 `debug-hotel-data.js` 调试工具
+  - 创建了 `TROUBLESHOOTING.md` 故障排除文档
+  - 创建了 `force-recompile.md` 强制重新编译指南
 
-### 修复
+## 技术说明
 
-- ✅ 修复列表页 URL 解码问题
-- ✅ 添加后端连接测试工具
+### WXS vs TypeScript
+在微信小程序中，WXS (WeiXin Script) 是一种在 WXML 模板中运行的脚本语言。与 TypeScript 相比：
+
+**优势：**
+- 直接在模板中执行，不依赖 TypeScript 编译
+- 性能更好，避免了编译和运行时的转换
+- 更可靠，不受微信开发者工具编译缓存影响
+
+**使用场景：**
+- 数据格式转换（如字符串转数字）
+- 简单的计算逻辑（如价格计算）
+- 模板中的数据处理
+
+### 筛选功能实现
+首页的筛选功能采用了实时筛选的方式：
+1. 用户点击星级/价格/设施选项卡
+2. 更新页面状态
+3. 立即调用 `loadRecommendHotels()` 重新加载推荐酒店
+4. 根据当前筛选条件构造 API 请求参数
+5. 显示筛选后的酒店列表
+
+这种方式提供了更好的用户体验，用户可以立即看到筛选效果。
+
+### 后端数据格式
+后端返回的酒店数据中，价格字段是字符串格式（如 `"333.00"`），需要在前端转换为数字格式才能正确显示。我们使用 WXS 的 `parseFloat()` 函数来处理这个转换。
+
+## 测试覆盖
+- 查询页单元测试：18 个测试全部通过
+- 列表页属性测试：8 个测试全部通过
+- 酒店卡片属性测试：通过
+- API 服务属性测试：通过
+- 缓存服务属性测试：通过
+- 存储服务属性测试：通过
+- 格式化工具属性测试：通过
