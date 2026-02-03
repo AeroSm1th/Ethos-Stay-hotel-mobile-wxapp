@@ -77,6 +77,12 @@ Page<ListPageData, {}>({
       filters.maxPrice = parseInt(options.maxPrice);
     }
 
+    // 解析设施标签
+    let selectedTags: string[] = [];
+    if (options.tags) {
+      selectedTags = decodeURIComponent(options.tags).split(',').filter(tag => tag.trim());
+    }
+
     // 计算间夜数
     const nights = filters.checkIn && filters.checkOut
       ? calculateNights(filters.checkIn, filters.checkOut)
@@ -85,6 +91,7 @@ Page<ListPageData, {}>({
     this.setData({
       filters,
       nights,
+      selectedTags,
     });
 
     // 加载酒店数据
