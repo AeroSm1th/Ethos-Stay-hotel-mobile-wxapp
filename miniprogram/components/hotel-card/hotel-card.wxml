@@ -2,6 +2,8 @@
   酒店卡片组件
   显示酒店的基本信息，包括图片、名称、星级、地址、价格、标签
 -->
+<wxs module="priceUtils" src="./hotel-card.wxs"></wxs>
+
 <view class="hotel-card" bindtap="handleCardClick">
   <!-- 酒店图片 -->
   <view class="hotel-card__image">
@@ -42,7 +44,7 @@
     <view class="hotel-card__footer" wx:if="{{showPrice && hotel.roomTypes && hotel.roomTypes.length > 0}}">
       <view class="hotel-card__price">
         <text class="hotel-card__price-label">¥</text>
-        <text class="hotel-card__price-value">{{minPrice}}</text>
+        <text class="hotel-card__price-value">{{priceUtils.getMinPrice(hotel)}}</text>
         <text class="hotel-card__price-unit">起</text>
       </view>
     </view>

@@ -1,0 +1,50 @@
+/**
+ * 酒店卡片 WXS 模块
+ * 用于在模板中计算价格
+ */
+
+/**
+ * 获取酒店最低价格
+ * @param {Object} hotel - 酒店对象
+ * @returns {Number} 最低价格
+ */
+function getMinPrice(hotel) {
+  if (!hotel || !hotel.roomTypes || hotel.roomTypes.length === 0) {
+    return 0;
+  }
+  
+  var prices = [];
+  for (var i = 0; i < hotel.roomTypes.length; i++) {
+    var room = hotel.roomTypes[i];
+    var price = room.price;
+    
+    // 将字符串价格转换为数字
+    if (typeof price === 'string') {
+      price = parseFloat(price);
+    }
+    
+    // 确保价格是有效数字
+    if (!isNaN(price) && price > 0) {
+      prices.push(price);
+    }
+  }
+  
+  if (prices.length === 0) {
+    return 0;
+  }
+  
+  // 找出最小价格
+  var minPrice = prices[0];
+  for (var j = 1; j < prices.length; j++) {
+    if (prices[j] < minPrice) {
+      minPrice = prices[j];
+    }
+  }
+  
+  // 向下取整
+  return Math.floor(minPrice);
+}
+
+module.exports = {
+  getMinPrice: getMinPrice
+};
