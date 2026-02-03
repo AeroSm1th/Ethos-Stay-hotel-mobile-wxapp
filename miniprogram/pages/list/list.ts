@@ -414,6 +414,9 @@ Page<ListPageData, {}>({
   sortHotels(sortBy: string) {
     const { allHotels, selectedTags } = this.data;
     
+    console.log('开始排序，排序方式:', sortBy);
+    console.log('酒店总数:', allHotels.length);
+    
     // 首先对所有酒店进行排序
     let sortedHotels = [...allHotels];
 
@@ -430,32 +433,39 @@ Page<ListPageData, {}>({
 
       case 'price':
         // 价格/星级排序（按最低价格升序）
+        console.log('按价格排序...');
         sortedHotels.sort((a, b) => {
           const priceA = this.getMinPrice(a);
           const priceB = this.getMinPrice(b);
           return priceA - priceB;
         });
+        console.log('价格排序完成');
         break;
 
       default:
         break;
     }
 
-    // 更新 allHotels 为排序后的结果
-    this.setData({ allHotels: sortedHotels });
-
-    // 如果有标签筛选，重新应用筛选
+    // 如果有标签筛选，应用筛选
+    let finalHotels = sortedHotels;
     if (selectedTags.length > 0) {
-      const filteredHotels = sortedHotels.filter((hotel) => {
+      console.log('应用标签筛选:', selectedTags);
+      finalHotels = sortedHotels.filter((hotel) => {
         if (!hotel.facilities || hotel.facilities.length === 0) {
           return false;
         }
         return selectedTags.every((tag) => hotel.facilities!.includes(tag));
       });
-      this.setData({ hotels: filteredHotels });
-    } else {
-      this.setData({ hotels: sortedHotels });
+      console.log('筛选后酒店数:', finalHotels.length);
     }
+
+    // 一次性更新数据
+    console.log('更新数据...');
+    this.setData({ 
+      allHotels: sortedHotels,
+      hotels: finalHotels
+    });
+    console.log('排序完成');
   },
 
   /**
