@@ -3,6 +3,12 @@
 ## [未发布]
 
 ### 修复
+- **hotel-card 组件方法定义错误** (2026-02-03)
+  - 修复了 `calculateMinPrice is not a function` 错误
+  - 将 `calculateMinPrice` 方法从组件顶层移到 `methods` 对象中
+  - 微信小程序组件的方法必须定义在 `methods` 对象中才能被正确调用
+  - 相关文件：`miniprogram/components/hotel-card/hotel-card.ts`
+
 - **首页选项卡筛选功能** (2026-02-03)
   - 修复了星级、价格、设施选项卡点击后没有实际筛选效果的问题
   - 现在点击任何筛选选项卡后，推荐酒店列表会立即根据筛选条件重新加载
