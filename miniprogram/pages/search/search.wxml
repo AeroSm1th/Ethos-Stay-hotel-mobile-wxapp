@@ -1,6 +1,6 @@
 <!--pages/search/search.wxml-->
 <wxs module="searchUtils" src="./search.wxs"></wxs>
-<view class="search-page">
+<scroll-view class="search-page" scroll-y="{{true}}" enable-back-to-top="{{true}}">
   <!-- 顶部 Banner -->
   <view class="banner-section" wx:if="{{bannerHotels.length > 0}}">
     <view class="banner-item" wx:for="{{bannerHotels}}" wx:key="id" bindtap="handleHotelClick" data-hotel="{{item}}">
@@ -164,4 +164,4 @@
       <text>加载中...</text>
     </view>
   </view>
-</view>
+</scroll-view>

@@ -1,6 +1,6 @@
 <!--pages/list/list.wxml-->
 <wxs module="listUtils" src="./list.wxs"></wxs>
-<view class="container">
+<scroll-view class="container" scroll-y="{{true}}" enable-back-to-top="{{true}}">
   <!-- 顶部筛选条件展示区域 -->
   <view class="filter-header" bindtap="toggleFilterPanel">
     <view class="filter-info">
@@ -173,4 +173,4 @@
   <view class="no-more" wx:if="{{!hasMore && hotels.length > 0}}">
     <text class="no-more-text">没有更多数据了</text>
   </view>
-</view>
+</scroll-view>

@@ -1,5 +1,5 @@
 <!--pages/detail/detail.wxml-->
-<view class="container">
+<scroll-view class="container" scroll-y="{{true}}" enable-back-to-top="{{true}}">
   <!-- 加载状态 -->
   <view wx:if="{{loading}}" class="loading-container">
     <view class="loading-text">加载中...</view>
@@ -128,4 +128,4 @@
       <button class="btn-book" bindtap="scrollToRooms">查看房型</button>
     </view>
   </view>
-</view>
+</scroll-view>
