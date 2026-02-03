@@ -86,6 +86,41 @@
   border-radius: 2rpx;
 }
 
+/* 筛选区域 */
+.filter-section {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-md);
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.filter-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.filter-option {
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border: 1rpx solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+.filter-option.active {
+  background-color: var(--primary-color);
+  color: var(--bg-primary);
+  border-color: var(--primary-color);
+}
+
 /* 快捷标签 */
 .quick-tags {
   display: flex;

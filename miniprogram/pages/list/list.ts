@@ -2,7 +2,7 @@
 
 import { Hotel, FilterCriteria } from '../../types/index';
 import { hotelApi } from '../../services/api';
-import { PAGE_SIZE, SORT_OPTIONS } from '../../utils/constants';
+import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS } from '../../utils/constants';
 import { calculateNights } from '../../utils/format';
 
 /**
@@ -24,6 +24,10 @@ interface ListPageData {
   quickTags: string[];       // 快捷标签
   selectedTags: string[];    // 选中的标签
   allHotels: Hotel[];        // 所有酒店（用于筛选）
+  starOptions: typeof STAR_OPTIONS; // 星级选项
+  priceOptions: typeof PRICE_OPTIONS; // 价格选项
+  selectedStarRating: number; // 选中的星级
+  selectedPriceRange: string; // 选中的价格区间
 }
 
 /**
@@ -52,6 +56,10 @@ Page<ListPageData, {}>({
     quickTags: [],
     selectedTags: [],
     allHotels: [],
+    starOptions: STAR_OPTIONS,
+    priceOptions: PRICE_OPTIONS,
+    selectedStarRating: 0,
+    selectedPriceRange: '不限',
   },
 
   /**
@@ -70,11 +78,16 @@ Page<ListPageData, {}>({
     };
 
     // 解析价格区间
+    let selectedPriceRange = '不限';
     if (options.minPrice) {
       filters.minPrice = parseInt(options.minPrice);
     }
     if (options.maxPrice) {
       filters.maxPrice = parseInt(options.maxPrice);
+    }
+    // 根据 minPrice 和 maxPrice 反推价格区间字符串
+    if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+      selectedPriceRange = this.getPriceRangeLabel(filters.minPrice, filters.maxPrice);
     }
 
     // 解析设施标签
@@ -92,6 +105,8 @@ Page<ListPageData, {}>({
       filters,
       nights,
       selectedTags,
+      selectedStarRating: filters.starRating || 0,
+      selectedPriceRange,
     });
 
     // 加载酒店数据
@@ -377,5 +392,103 @@ Page<ListPageData, {}>({
 
       this.setData({ hotels: filteredHotels });
     }
+  },
+
+  /**
+   * 根据 minPrice 和 maxPrice 反推价格区间字符串
+   */
+  getPriceRangeLabel(minPrice?: number, maxPrice?: number): string {
+    if (minPrice === undefined && maxPrice === undefined) {
+      return '不限';
+    }
+    if (maxPrice !== undefined && minPrice === undefined) {
+      return `¥${maxPrice}以下`;
+    }
+    if (minPrice !== undefined && maxPrice === undefined) {
+      return `¥${minPrice}以上`;
+    }
+    return `¥${minPrice}-${maxPrice}`;
+  },
+
+  /**
+   * 处理星级选择
+   */
+  handleStarSelect(e: any) {
+    const { value } = e.currentTarget.dataset;
+    const starRating = parseInt(value);
+
+    console.log('选择星级:', starRating);
+
+    this.setData({
+      selectedStarRating: starRating,
+      filters: {
+        ...this.data.filters,
+        starRating,
+      },
+      page: 1,
+      hasMore: true,
+    });
+
+    // 重新加载酒店数据
+    this.loadHotels(false);
+  },
+
+  /**
+   * 处理价格区间选择
+   */
+  handlePriceSelect(e: any) {
+    const { value } = e.currentTarget.dataset;
+    const priceRange = value as string;
+
+    console.log('选择价格区间:', priceRange);
+
+    // 解析价格区间
+    const priceParams = this.parsePriceRange(priceRange);
+
+    this.setData({
+      selectedPriceRange: priceRange,
+      filters: {
+        ...this.data.filters,
+        minPrice: priceParams.minPrice,
+        maxPrice: priceParams.maxPrice,
+      },
+      page: 1,
+      hasMore: true,
+    });
+
+    // 重新加载酒店数据
+    this.loadHotels(false);
+  },
+
+  /**
+   * 解析价格区间字符串
+   */
+  parsePriceRange(priceRange: string): { minPrice?: number; maxPrice?: number } {
+    if (priceRange === '不限') {
+      return {};
+    }
+
+    // 匹配 "¥150以下"
+    const belowMatch = priceRange.match(/¥(\d+)以下/);
+    if (belowMatch) {
+      return { maxPrice: parseInt(belowMatch[1]) };
+    }
+
+    // 匹配 "¥600以上"
+    const aboveMatch = priceRange.match(/¥(\d+)以上/);
+    if (aboveMatch) {
+      return { minPrice: parseInt(aboveMatch[1]) };
+    }
+
+    // 匹配 "¥150-300"
+    const rangeMatch = priceRange.match(/¥(\d+)-(\d+)/);
+    if (rangeMatch) {
+      return {
+        minPrice: parseInt(rangeMatch[1]),
+        maxPrice: parseInt(rangeMatch[2]),
+      };
+    }
+
+    return {};
   },
 });

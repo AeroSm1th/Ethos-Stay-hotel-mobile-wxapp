@@ -30,6 +30,38 @@
     </block>
   </view>
 
+  <!-- 星级筛选 -->
+  <view class="filter-section" wx:if="{{!loading && hotels.length > 0}}">
+    <view class="filter-title">星级</view>
+    <view class="filter-options">
+      <block wx:for="{{starOptions}}" wx:key="value">
+        <view 
+          class="filter-option {{selectedStarRating === item.value ? 'active' : ''}}"
+          data-value="{{item.value}}"
+          bindtap="handleStarSelect"
+        >
+          <text>{{item.label}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 价格筛选 -->
+  <view class="filter-section" wx:if="{{!loading && hotels.length > 0}}">
+    <view class="filter-title">价格</view>
+    <view class="filter-options">
+      <block wx:for="{{priceOptions}}" wx:key="*this">
+        <view 
+          class="filter-option {{selectedPriceRange === item ? 'active' : ''}}"
+          data-value="{{item}}"
+          bindtap="handlePriceSelect"
+        >
+          <text>{{item}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
   <!-- 快捷标签 -->
   <view class="quick-tags" wx:if="{{!loading && quickTags.length > 0}}">
     <block wx:for="{{quickTags}}" wx:key="*this">
