@@ -15,14 +15,6 @@
     "restartStrategy": "homePage"
   },
   "style": "v2",
-  "componentFramework": "glass-easel",
   "lazyCodeLoading": "requiredComponents",
-  "sitemapLocation": "sitemap.json",
-  "renderer": "skyline",
-  "rendererOptions": {
-    "skyline": {
-      "defaultDisplayBlock": true,
-      "disableABTest": true
-    }
-  }
+  "sitemapLocation": "sitemap.json"
 }
