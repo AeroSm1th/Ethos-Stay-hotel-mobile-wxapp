@@ -150,8 +150,13 @@ Page<SearchPageData, {}>({
    * 根据当前筛选条件加载酒店列表
    */
   async loadRecommendHotels() {
+    console.log('========================================');
+    console.log('开始加载推荐酒店');
+    console.log('========================================');
+    
     try {
       this.setData({ loading: true });
+      console.log('设置 loading = true');
 
       const { starRating, priceRange, selectedTags } = this.data;
 
@@ -182,17 +187,23 @@ Page<SearchPageData, {}>({
         params.tags = selectedTags.join(',');
       }
 
-      console.log('查询页: 加载推荐酒店，参数:', params);
+      console.log('查询页: 加载推荐酒店，参数:', JSON.stringify(params));
 
       // 获取推荐酒店
+      console.log('开始调用 hotelApi.getHotelList...');
       const response = await hotelApi.getHotelList(params);
+      console.log('API 调用成功，响应:', response);
 
       const hotels = response.data || [];
+      console.log('获取到酒店数量:', hotels.length);
 
       // 第一个作为 Banner
       const bannerHotels = hotels.slice(0, 1);
       // 其余作为推荐列表
       const recommendHotels = hotels.slice(1);
+
+      console.log('Banner 酒店数量:', bannerHotels.length);
+      console.log('推荐酒店数量:', recommendHotels.length);
 
       this.setData({
         bannerHotels,
@@ -200,9 +211,18 @@ Page<SearchPageData, {}>({
         loading: false,
       });
       
-      console.log('查询页: 推荐酒店加载完成，数量:', hotels.length);
+      console.log('查询页: 推荐酒店加载完成');
+      console.log('当前 data.bannerHotels:', this.data.bannerHotels.length);
+      console.log('当前 data.recommendHotels:', this.data.recommendHotels.length);
+      console.log('========================================');
     } catch (error) {
-      console.error('加载推荐酒店失败:', error);
+      console.error('========================================');
+      console.error('加载推荐酒店失败!!!');
+      console.error('错误详情:', error);
+      console.error('错误类型:', typeof error);
+      console.error('错误信息:', error instanceof Error ? error.message : String(error));
+      console.error('========================================');
+      
       // 确保无论如何都关闭 loading 状态
       this.setData({ 
         loading: false,
