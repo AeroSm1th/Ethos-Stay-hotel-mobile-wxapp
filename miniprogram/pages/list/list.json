@@ -2,6 +2,7 @@
   "navigationBarTitleText": "酒店列表",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "hotel-card": "/components/hotel-card/hotel-card"
+    "hotel-card": "/components/hotel-card/hotel-card",
+    "date-picker": "/components/date-picker/date-picker"
   }
 }
