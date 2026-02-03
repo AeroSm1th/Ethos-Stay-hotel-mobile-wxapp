@@ -109,6 +109,40 @@ Page<SearchPageData, {}>({
   },
 
   /**
+   * 解析价格区间字符串
+   * @param priceRange 价格区间字符串（如 "¥150-300"）
+   * @returns { minPrice?: number, maxPrice?: number }
+   */
+  parsePriceRange(priceRange: string): { minPrice?: number; maxPrice?: number } {
+    if (priceRange === '不限') {
+      return {};
+    }
+
+    // 匹配 "¥150以下"
+    const belowMatch = priceRange.match(/¥(\d+)以下/);
+    if (belowMatch) {
+      return { maxPrice: parseInt(belowMatch[1]) };
+    }
+
+    // 匹配 "¥600以上"
+    const aboveMatch = priceRange.match(/¥(\d+)以上/);
+    if (aboveMatch) {
+      return { minPrice: parseInt(aboveMatch[1]) };
+    }
+
+    // 匹配 "¥150-300"
+    const rangeMatch = priceRange.match(/¥(\d+)-(\d+)/);
+    if (rangeMatch) {
+      return {
+        minPrice: parseInt(rangeMatch[1]),
+        maxPrice: parseInt(rangeMatch[2]),
+      };
+    }
+
+    return {};
+  },
+
+  /**
    * 加载推荐酒店
    * 根据当前筛选条件加载酒店列表
    */
@@ -129,15 +163,23 @@ Page<SearchPageData, {}>({
         params.starRating = starRating;
       }
 
-      // 添加价格筛选
+      // 添加价格筛选 - 解析价格区间字符串
       if (priceRange !== '不限') {
-        params.priceRange = priceRange;
+        const priceParams = this.parsePriceRange(priceRange);
+        if (priceParams.minPrice !== undefined) {
+          params.minPrice = priceParams.minPrice;
+        }
+        if (priceParams.maxPrice !== undefined) {
+          params.maxPrice = priceParams.maxPrice;
+        }
       }
 
       // 添加设施标签筛选
       if (selectedTags.length > 0) {
         params.tags = selectedTags.join(',');
       }
+
+      console.log('查询页: 加载推荐酒店，参数:', params);
 
       // 获取推荐酒店
       const response = await hotelApi.getHotelList(params);
@@ -387,8 +429,15 @@ Page<SearchPageData, {}>({
       params.starRating = String(starRating);
     }
 
+    // 解析价格区间并添加到参数中
     if (priceRange !== '不限') {
-      params.priceRange = priceRange;
+      const priceParams = this.parsePriceRange(priceRange);
+      if (priceParams.minPrice !== undefined) {
+        params.minPrice = String(priceParams.minPrice);
+      }
+      if (priceParams.maxPrice !== undefined) {
+        params.maxPrice = String(priceParams.maxPrice);
+      }
     }
 
     if (selectedTags.length > 0) {
