@@ -166,6 +166,12 @@ Page<ListPageData, {}>({
   async loadHotels(append: boolean) {
     const { filters, page, pageSize, hotels, sortBy, selectedTags } = this.data;
 
+    console.log('========================================');
+    console.log('列表页: 开始加载酒店数据');
+    console.log('append:', append, 'page:', page);
+    console.log('filters:', filters);
+    console.log('========================================');
+
     // 设置加载状态
     if (append) {
       this.setData({ loadingMore: true });
@@ -175,6 +181,7 @@ Page<ListPageData, {}>({
 
     try {
       // 调用 API 获取酒店列表（全局加载提示已在 request 层处理）
+      console.log('列表页: 调用 API...');
       const response = await hotelApi.getHotelList({
         page,
         pageSize,
@@ -185,7 +192,9 @@ Page<ListPageData, {}>({
         maxPrice: filters.maxPrice,
       });
 
+      console.log('列表页: API 调用成功');
       console.log('酒店列表响应:', response);
+      console.log('返回酒店数量:', response.data?.length || 0);
 
       // 合并数据
       let allHotels = append ? [...this.data.allHotels, ...response.data] : response.data;
@@ -213,6 +222,7 @@ Page<ListPageData, {}>({
       // 提取快捷标签
       const quickTags = this.extractQuickTags(allHotels);
 
+      console.log('列表页: 设置数据到页面');
       this.setData({
         hotels: displayHotels,
         allHotels,
@@ -223,12 +233,23 @@ Page<ListPageData, {}>({
         quickTags,
       });
 
+      console.log('列表页: 数据设置完成');
+      console.log('当前 loading 状态:', this.data.loading);
+      console.log('显示酒店数量:', displayHotels.length);
+
       // 如果没有数据，显示提示
       if (response.total === 0) {
         this.setData({ error: '暂无符合条件的酒店' });
       }
+      
+      console.log('========================================');
     } catch (error: any) {
-      console.error('加载酒店列表失败:', error);
+      console.error('========================================');
+      console.error('列表页: 加载酒店列表失败!!!');
+      console.error('错误详情:', error);
+      console.error('错误类型:', typeof error);
+      console.error('错误信息:', error.message || String(error));
+      console.error('========================================');
 
       this.setData({
         loading: false,
