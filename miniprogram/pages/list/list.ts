@@ -324,6 +324,20 @@ Page<ListPageData, {}>({
   },
 
   /**
+   * 返回上一页
+   */
+  onBack() {
+    wx.navigateBack({
+      fail: () => {
+        // 如果无法返回,跳转到首页
+        wx.redirectTo({
+          url: '/pages/search/search',
+        });
+      },
+    });
+  },
+
+  /**
    * 显示筛选条件修改弹窗
    */
   showFilterModal() {
