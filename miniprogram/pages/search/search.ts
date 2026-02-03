@@ -9,6 +9,7 @@ import { hotelApi } from '../../services/api';
 import { storage } from '../../services/storage';
 import { formatDate, calculateNights } from '../../utils/format';
 import { POPULAR_CITIES, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS } from '../../utils/constants';
+import { showError, showSuccess } from '../../utils/toast';
 
 /**
  * 查询页数据接口
@@ -201,11 +202,7 @@ Page<SearchPageData, {}>({
     } catch (error) {
       console.error('加载推荐酒店失败:', error);
       this.setData({ loading: false });
-      wx.showToast({
-        title: '加载推荐酒店失败',
-        icon: 'none',
-        duration: 2000,
-      });
+      showError('加载推荐酒店失败');
     }
   },
 
@@ -380,11 +377,7 @@ Page<SearchPageData, {}>({
         
         storage.saveRecentCity(mockCity);
         
-        wx.showToast({
-          title: `定位到${mockCity}`,
-          icon: 'success',
-          duration: 2000,
-        });
+        showSuccess(`定位到${mockCity}`);
       },
       fail: (error) => {
         console.error('定位失败:', error);

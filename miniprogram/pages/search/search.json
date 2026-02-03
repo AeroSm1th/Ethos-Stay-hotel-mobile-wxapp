@@ -3,5 +3,13 @@
   "usingComponents": {
     "date-picker": "/components/date-picker/date-picker",
     "hotel-card": "/components/hotel-card/hotel-card"
-  }
+  },
+  "renderer": "skyline",
+  "rendererOptions": {
+    "skyline": {
+      "defaultDisplayBlock": true,
+      "disableABTest": true
+    }
+  },
+  "componentFramework": "glass-easel"
 }

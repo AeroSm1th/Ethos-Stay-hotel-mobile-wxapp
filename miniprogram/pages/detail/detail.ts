@@ -4,6 +4,7 @@ import { DetailPageData, Hotel } from '../../types/index';
 import { hotelApi } from '../../services/api';
 import { storage } from '../../services/storage';
 import { calculateNights } from '../../utils/format';
+import { showSuccess } from '../../utils/toast';
 
 /**
  * 酒店详情页
@@ -67,10 +68,7 @@ Page<DetailPageData, {}>({
     try {
       this.setData({ loading: true });
 
-      // 显示加载提示
-      wx.showLoading({ title: '加载中...' });
-
-      // 调用 API 获取酒店详情
+      // 调用 API 获取酒店详情（全局加载提示已在 request 层处理）
       const hotel = await hotelApi.getHotelDetail(hotelId);
 
       // 对房型按价格排序（从低到高）
@@ -94,12 +92,9 @@ Page<DetailPageData, {}>({
         collected,
         loading: false,
       });
-
-      wx.hideLoading();
     } catch (error) {
       console.error('加载酒店详情失败:', error);
       
-      wx.hideLoading();
       wx.showModal({
         title: '加载失败',
         content: '无法加载酒店详情，请检查网络连接或稍后重试',
@@ -151,18 +146,12 @@ Page<DetailPageData, {}>({
       // 取消收藏
       storage.removeFavorite(hotel.id);
       this.setData({ collected: false });
-      wx.showToast({
-        title: '已取消收藏',
-        icon: 'success',
-      });
+      showSuccess('已取消收藏');
     } else {
       // 添加收藏
       storage.addFavorite(hotel.id);
       this.setData({ collected: true });
-      wx.showToast({
-        title: '收藏成功',
-        icon: 'success',
-      });
+      showSuccess('收藏成功');
     }
   },
 

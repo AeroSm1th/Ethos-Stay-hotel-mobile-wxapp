@@ -4,7 +4,7 @@
   <!-- 顶部 Banner -->
   <view class="banner-section" wx:if="{{bannerHotels.length > 0}}">
     <view class="banner-item" wx:for="{{bannerHotels}}" wx:key="id" bindtap="handleHotelClick" data-hotel="{{item}}">
-      <image class="banner-image" src="{{item.images[0].imageUrl}}" mode="aspectFill" lazy-load />
+      <image class="banner-image" src="{{item.images[0].imageUrl}}" mode="aspectFill" lazy-load="{{true}}" />
       <view class="banner-info">
         <view class="banner-name">{{item.nameCn}}</view>
         <view class="banner-address">{{item.address}}</view>

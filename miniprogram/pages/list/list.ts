@@ -4,6 +4,7 @@ import { Hotel, FilterCriteria } from '../../types/index';
 import { hotelApi } from '../../services/api';
 import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS, ALL_CITIES } from '../../utils/constants';
 import { calculateNights } from '../../utils/format';
+import { showError, showInfo } from '../../utils/toast';
 
 /**
  * 列表页数据接口
@@ -31,6 +32,7 @@ interface ListPageData {
   showFilterPanel: boolean;  // 是否显示筛选面板
   showCityPicker: boolean;   // 是否显示城市选择器
   popularCities: string[];   // 热门城市列表
+  scrollTop: number;         // 滚动位置
 }
 
 /**
@@ -66,6 +68,7 @@ Page<ListPageData, {}>({
     showFilterPanel: false,
     showCityPicker: false,
     popularCities: ALL_CITIES,
+    scrollTop: 0,
   },
 
   /**
@@ -127,6 +130,36 @@ Page<ListPageData, {}>({
   },
 
   /**
+   * 页面显示（从其他页面返回时触发）
+   */
+  onShow() {
+    // 恢复滚动位置
+    const { scrollTop } = this.data;
+    if (scrollTop > 0) {
+      wx.pageScrollTo({
+        scrollTop,
+        duration: 0, // 立即恢复，不需要动画
+      });
+    }
+  },
+
+  /**
+   * 页面隐藏（跳转到其他页面时触发）
+   */
+  onHide() {
+    // 保存当前滚动位置
+    const query = wx.createSelectorQuery();
+    query.selectViewport().scrollOffset();
+    query.exec((res) => {
+      if (res && res[0]) {
+        this.setData({
+          scrollTop: res[0].scrollTop,
+        });
+      }
+    });
+  },
+
+  /**
    * 加载酒店数据
    * @param append 是否追加到现有列表
    */
@@ -138,11 +171,10 @@ Page<ListPageData, {}>({
       this.setData({ loadingMore: true });
     } else {
       this.setData({ loading: true, error: '' });
-      wx.showLoading({ title: '加载中...' });
     }
 
     try {
-      // 调用 API 获取酒店列表
+      // 调用 API 获取酒店列表（全局加载提示已在 request 层处理）
       const response = await hotelApi.getHotelList({
         page,
         pageSize,
@@ -204,12 +236,7 @@ Page<ListPageData, {}>({
         error: error.message || '加载失败，请稍后重试',
       });
 
-      wx.showToast({
-        title: '加载失败',
-        icon: 'none',
-      });
-    } finally {
-      wx.hideLoading();
+      showError('加载失败');
     }
   },
 
@@ -452,8 +479,7 @@ Page<ListPageData, {}>({
 
     console.log('加载所有酒店数据进行排序');
 
-    // 显示加载提示
-    wx.showLoading({ title: '排序中...' });
+    // 显示加载状态
     this.setData({ loading: true });
 
     try {
@@ -480,7 +506,6 @@ Page<ListPageData, {}>({
           loading: false,
           error: '暂无符合条件的酒店',
         });
-        wx.hideLoading();
         return;
       }
 
@@ -529,16 +554,11 @@ Page<ListPageData, {}>({
       console.log('排序完成');
     } catch (error: any) {
       console.error('加载数据失败:', error);
-      wx.showToast({
-        title: '排序失败',
-        icon: 'none',
-      });
+      showError('排序失败');
       this.setData({ 
         loading: false,
         error: error.message || '加载失败，请稍后重试',
       });
-    } finally {
-      wx.hideLoading();
     }
   },
 

@@ -272,3 +272,24 @@ page {
   margin-top: var(--spacing-md);
   font-size: var(--font-md);
 }
+
+/* 图片懒加载占位符 */
+image {
+  background-color: var(--bg-gray);
+  transition: opacity var(--transition-normal);
+}
+
+image[lazy-load] {
+  background: linear-gradient(90deg, var(--bg-gray) 25%, var(--border-light) 50%, var(--bg-gray) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

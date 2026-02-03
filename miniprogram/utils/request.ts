@@ -14,6 +14,8 @@ export interface RequestConfig {
   data?: any;                            // 请求数据
   header?: Record<string, string>;       // 请求头
   timeout?: number;                      // 超时时间
+  showLoading?: boolean;                 // 是否显示加载提示（默认 true）
+  loadingText?: string;                  // 加载提示文本（默认 "加载中..."）
 }
 
 /**
@@ -50,6 +52,17 @@ export class Request {
     // 请求拦截器
     const finalConfig = this.beforeRequest(config);
 
+    // 显示加载提示（默认显示）
+    const showLoading = config.showLoading !== false;
+    const loadingText = config.loadingText || '加载中...';
+    
+    if (showLoading) {
+      wx.showLoading({
+        title: loadingText,
+        mask: true, // 显示透明蒙层，防止触摸穿透
+      });
+    }
+
     return new Promise<T>((resolve, reject) => {
       wx.request({
         url: finalConfig.url,
@@ -64,9 +77,19 @@ export class Request {
             resolve(data as T);
           } catch (error) {
             reject(error);
+          } finally {
+            // 隐藏加载提示
+            if (showLoading) {
+              wx.hideLoading();
+            }
           }
         },
         fail: (error: any) => {
+          // 隐藏加载提示
+          if (showLoading) {
+            wx.hideLoading();
+          }
+          
           // 错误处理
           this.handleError(error);
           reject(error);
@@ -79,9 +102,10 @@ export class Request {
    * GET 请求
    * @param url 请求路径
    * @param params 查询参数
+   * @param options 请求选项（showLoading, loadingText）
    * @returns Promise<T>
    */
-  async get<T>(url: string, params?: any): Promise<T> {
+  async get<T>(url: string, params?: any, options?: { showLoading?: boolean; loadingText?: string }): Promise<T> {
     // 构造查询字符串
     let queryString = '';
     if (params) {
@@ -101,6 +125,7 @@ export class Request {
     return this.request<T>({
       url: url + queryString,
       method: 'GET',
+      ...options,
     });
   }
 
@@ -108,13 +133,15 @@ export class Request {
    * POST 请求
    * @param url 请求路径
    * @param data 请求数据
+   * @param options 请求选项（showLoading, loadingText）
    * @returns Promise<T>
    */
-  async post<T>(url: string, data?: any): Promise<T> {
+  async post<T>(url: string, data?: any, options?: { showLoading?: boolean; loadingText?: string }): Promise<T> {
     return this.request<T>({
       url,
       method: 'POST',
       data,
+      ...options,
     });
   }
 

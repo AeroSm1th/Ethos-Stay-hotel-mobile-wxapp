@@ -31,7 +31,7 @@
         bindchange="onSwiperChange"
       >
         <swiper-item wx:for="{{hotel.images}}" wx:key="id">
-          <image class="swiper-image" src="{{item.imageUrl}}" mode="aspectFill" lazy-load />
+          <image class="swiper-image" src="{{item.imageUrl}}" mode="aspectFill" lazy-load="{{true}}" />
         </swiper-item>
       </swiper>
       <view class="image-indicator">{{currentImageIndex + 1}}/{{hotel.images.length}}</view>
@@ -99,7 +99,7 @@
       <view class="section-title">房型选择</view>
       <view class="room-list">
         <view class="room-card" wx:for="{{hotel.roomTypes}}" wx:key="id">
-          <image class="room-image" src="{{item.imageUrl || '/images/placeholder.png'}}" mode="aspectFill" lazy-load />
+          <image class="room-image" src="{{item.imageUrl || '/images/placeholder.png'}}" mode="aspectFill" lazy-load="{{true}}" />
           <view class="room-info">
             <view class="room-name">{{item.name}}</view>
             <view class="room-details">
