@@ -1,44 +1,8 @@
 /* pages/list/list.wxss */
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--bg-secondary);
-  padding-top: env(safe-area-inset-top);
-}
-
-/* 自定义导航栏 */
-.custom-nav-bar {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 88rpx;
-  background-color: var(--primary-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--spacing-md);
-  z-index: 1000;
-}
-
-.nav-left,
-.nav-right {
-  width: 80rpx;
-  display: flex;
-  align-items: center;
-}
-
-.nav-icon {
-  font-size: 40rpx;
-  color: white;
-}
-
-.nav-title {
-  flex: 1;
-  text-align: center;
-  font-size: 32rpx;
-  font-weight: 500;
-  color: white;
 }
 
 /* 顶部筛选条件展示 */

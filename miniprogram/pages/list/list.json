@@ -1,17 +1,8 @@
 {
   "navigationBarTitleText": "酒店列表",
-  "navigationStyle": "custom",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "hotel-card": "/components/hotel-card/hotel-card",
     "date-picker": "/components/date-picker/date-picker"
-  },
-  "renderer": "skyline",
-  "rendererOptions": {
-    "skyline": {
-      "defaultDisplayBlock": true,
-      "disableABTest": true
-    }
-  },
-  "componentFramework": "glass-easel"
+  }
 }

@@ -1,9 +1,8 @@
 /* pages/detail/detail.wxss */
 
 .container {
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--bg-secondary);
-  padding-top: env(safe-area-inset-top);
   padding-bottom: 120rpx;
 }
 

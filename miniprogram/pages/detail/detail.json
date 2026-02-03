@@ -1,13 +1,4 @@
 {
   "navigationBarTitleText": "酒店详情",
-  "navigationStyle": "custom",
-  "usingComponents": {},
-  "renderer": "skyline",
-  "rendererOptions": {
-    "skyline": {
-      "defaultDisplayBlock": true,
-      "disableABTest": true
-    }
-  },
-  "componentFramework": "glass-easel"
+  "usingComponents": {}
 }

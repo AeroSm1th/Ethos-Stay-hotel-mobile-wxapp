@@ -1,15 +1,6 @@
 <!--pages/list/list.wxml-->
 <wxs module="listUtils" src="./list.wxs"></wxs>
 <scroll-view class="container" scroll-y="{{true}}" enable-back-to-top="{{true}}">
-  <!-- 自定义导航栏 -->
-  <view class="custom-nav-bar">
-    <view class="nav-left" bindtap="onBack">
-      <text class="nav-icon">←</text>
-    </view>
-    <view class="nav-title">酒店列表</view>
-    <view class="nav-right"></view>
-  </view>
-
   <!-- 顶部筛选条件展示区域 -->
   <view class="filter-header" bindtap="toggleFilterPanel">
     <view class="filter-info">
