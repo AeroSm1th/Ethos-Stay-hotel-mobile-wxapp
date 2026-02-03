@@ -180,9 +180,8 @@ Page<ListPageData, {}>({
     }
 
     try {
-      // 调用 API 获取酒店列表（全局加载提示已在 request 层处理）
-      console.log('列表页: 调用 API...');
-      const response = await hotelApi.getHotelList({
+      // 构造 API 参数
+      const apiParams = {
         page,
         pageSize,
         keyword: filters.keyword || undefined,
@@ -190,9 +189,16 @@ Page<ListPageData, {}>({
         starRating: filters.starRating || undefined,
         minPrice: filters.minPrice,
         maxPrice: filters.maxPrice,
-      });
+      };
+      
+      console.log('列表页: 调用 API,参数:', JSON.stringify(apiParams));
+      
+      // 调用 API 获取酒店列表
+      const startTime = Date.now();
+      const response = await hotelApi.getHotelList(apiParams);
+      const endTime = Date.now();
 
-      console.log('列表页: API 调用成功');
+      console.log(`列表页: API 调用成功,耗时 ${endTime - startTime}ms`);
       console.log('酒店列表响应:', response);
       console.log('返回酒店数量:', response.data?.length || 0);
 
@@ -249,6 +255,7 @@ Page<ListPageData, {}>({
       console.error('错误详情:', error);
       console.error('错误类型:', typeof error);
       console.error('错误信息:', error.message || String(error));
+      console.error('错误堆栈:', error.stack);
       console.error('========================================');
 
       this.setData({
