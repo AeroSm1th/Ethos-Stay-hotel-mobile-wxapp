@@ -1,4 +1,166 @@
 <!--pages/search/search.wxml-->
-<view class="container">
-  <view class="placeholder">酒店查询页</view>
+<view class="search-page">
+  <!-- 顶部 Banner -->
+  <view class="banner-section" wx:if="{{bannerHotels.length > 0}}">
+    <view class="banner-item" wx:for="{{bannerHotels}}" wx:key="id" bindtap="handleHotelClick" data-hotel="{{item}}">
+      <image class="banner-image" src="{{item.images[0].imageUrl}}" mode="aspectFill" lazy-load />
+      <view class="banner-info">
+        <view class="banner-name">{{item.nameCn}}</view>
+        <view class="banner-address">{{item.address}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 查询表单 -->
+  <view class="search-form">
+    <!-- 城市选择 -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="icon">📍</text>
+        <text>城市</text>
+      </view>
+      <view class="form-value" bindtap="showCityPicker">
+        <text>{{city}}</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 日期选择 -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="icon">📅</text>
+        <text>入住</text>
+      </view>
+      <view class="form-value">
+        <date-picker value="{{checkIn}}" bind:change="handleCheckInChange" />
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">
+        <text class="icon">📅</text>
+        <text>离店</text>
+      </view>
+      <view class="form-value">
+        <date-picker value="{{checkOut}}" minDate="{{checkIn}}" bind:change="handleCheckOutChange" />
+      </view>
+    </view>
+
+    <view class="nights-info">
+      <text>共 {{nights}} 晚</text>
+    </view>
+
+    <!-- 关键词搜索 -->
+    <view class="form-item">
+      <view class="form-label">
+        <text class="icon">🔍</text>
+        <text>关键词</text>
+      </view>
+      <view class="form-value">
+        <input 
+          class="keyword-input" 
+          placeholder="位置、品牌或酒店名称" 
+          value="{{keyword}}"
+          bindinput="handleKeywordInput"
+        />
+      </view>
+    </view>
+
+    <!-- GPS 定位按钮 -->
+    <view class="gps-button" bindtap="handleGpsLocation">
+      <text class="icon">📍</text>
+      <text>使用当前位置</text>
+    </view>
+
+    <!-- 星级筛选 -->
+    <view class="filter-section">
+      <view class="filter-title">星级</view>
+      <view class="filter-options">
+        <view 
+          class="filter-option {{starRating === item.value ? 'active' : ''}}"
+          wx:for="{{starOptions}}"
+          wx:key="value"
+          data-value="{{item.value}}"
+          bindtap="handleStarSelect"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 价格筛选 -->
+    <view class="filter-section">
+      <view class="filter-title">价格</view>
+      <view class="filter-options">
+        <view 
+          class="filter-option {{priceRange === item ? 'active' : ''}}"
+          wx:for="{{priceOptions}}"
+          wx:key="*this"
+          data-value="{{item}}"
+          bindtap="handlePriceSelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 快捷标签 -->
+    <view class="filter-section">
+      <view class="filter-title">设施</view>
+      <view class="tag-list">
+        <view 
+          class="tag-item {{selectedTags.indexOf(item) > -1 ? 'active' : ''}}"
+          wx:for="{{quickTags}}"
+          wx:key="*this"
+          data-tag="{{item}}"
+          bindtap="handleTagToggle"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 搜索按钮 -->
+    <button class="search-button" bindtap="handleSearch">
+      搜索酒店
+    </button>
+  </view>
+
+  <!-- 推荐酒店 -->
+  <view class="recommend-section" wx:if="{{recommendHotels.length > 0}}">
+    <view class="section-title">为您推荐</view>
+    <scroll-view class="recommend-list" scroll-x>
+      <view class="recommend-item" wx:for="{{recommendHotels}}" wx:key="id">
+        <hotel-card hotel="{{item}}" bind:click="handleHotelClick" />
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 城市选择器弹窗 -->
+  <view class="city-picker-modal" wx:if="{{showCityPicker}}" bindtap="hideCityPicker">
+    <view class="city-picker-content" catchtap="{{null}}">
+      <view class="city-picker-header">
+        <text class="city-picker-title">选择城市</text>
+        <text class="city-picker-close" bindtap="hideCityPicker">✕</text>
+      </view>
+      <view class="city-list">
+        <view 
+          class="city-item {{city === item ? 'active' : ''}}"
+          wx:for="{{popularCities}}"
+          wx:key="*this"
+          data-city="{{item}}"
+          bindtap="handleCitySelect"
+        >
+          {{item}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载提示 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-content">
+      <text>加载中...</text>
+    </view>
+  </view>
 </view>

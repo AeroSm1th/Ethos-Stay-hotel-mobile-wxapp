@@ -1,4 +1,7 @@
 {
-  "navigationBarTitleText": "酒店查询",
-  "usingComponents": {}
+  "navigationBarTitleText": "易宿酒店",
+  "usingComponents": {
+    "date-picker": "/components/date-picker/date-picker",
+    "hotel-card": "/components/hotel-card/hotel-card"
+  }
 }

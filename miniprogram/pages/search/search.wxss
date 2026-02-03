@@ -1,7 +1,313 @@
 /* pages/search/search.wxss */
 
-.placeholder {
-  padding: var(--spacing-xl);
-  text-align: center;
+.search-page {
+  min-height: 100vh;
+  background-color: var(--bg-secondary);
+  padding-bottom: var(--spacing-xl);
+}
+
+/* ==================== Banner 区域 ==================== */
+
+.banner-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.banner-item {
+  position: relative;
+  height: 400rpx;
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+}
+
+.banner-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-lg);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: #fff;
+}
+
+.banner-name {
+  font-size: var(--font-lg);
+  font-weight: bold;
+  margin-bottom: var(--spacing-xs);
+}
+
+.banner-address {
+  font-size: var(--font-sm);
+  opacity: 0.9;
+}
+
+/* ==================== 查询表单 ==================== */
+
+.search-form {
+  background-color: #fff;
+  border-radius: var(--radius-lg);
+  margin: var(--spacing-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.form-item:last-of-type {
+  border-bottom: none;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-md);
+  color: var(--text-primary);
+}
+
+.form-label .icon {
+  margin-right: var(--spacing-sm);
+  font-size: var(--font-lg);
+}
+
+.form-value {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+}
+
+.form-value .arrow {
+  margin-left: var(--spacing-xs);
+  font-size: var(--font-xl);
   color: var(--text-tertiary);
+}
+
+.keyword-input {
+  flex: 1;
+  text-align: right;
+  font-size: var(--font-md);
+}
+
+.nights-info {
+  text-align: center;
+  padding: var(--spacing-sm) 0;
+  font-size: var(--font-sm);
+  color: var(--primary-color);
+}
+
+/* ==================== GPS 定位按钮 ==================== */
+
+.gps-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  color: var(--primary-color);
+}
+
+.gps-button .icon {
+  margin-right: var(--spacing-xs);
+}
+
+/* ==================== 筛选区域 ==================== */
+
+.filter-section {
+  margin-top: var(--spacing-lg);
+}
+
+.filter-title {
+  font-size: var(--font-md);
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.filter-option {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  transition: all 0.3s;
+}
+
+.filter-option.active {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* ==================== 快捷标签 ==================== */
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.tag-item {
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  transition: all 0.3s;
+}
+
+.tag-item.active {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* ==================== 搜索按钮 ==================== */
+
+.search-button {
+  margin-top: var(--spacing-xl);
+  width: 100%;
+  height: 88rpx;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: var(--font-md);
+  font-weight: bold;
+  border-radius: var(--radius-md);
+  border: none;
+}
+
+.search-button::after {
+  border: none;
+}
+
+/* ==================== 推荐酒店 ==================== */
+
+.recommend-section {
+  margin: var(--spacing-md);
+}
+
+.section-title {
+  font-size: var(--font-lg);
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.recommend-list {
+  white-space: nowrap;
+}
+
+.recommend-item {
+  display: inline-block;
+  width: 560rpx;
+  margin-right: var(--spacing-md);
+  vertical-align: top;
+}
+
+.recommend-item:last-child {
+  margin-right: 0;
+}
+
+/* ==================== 城市选择器弹窗 ==================== */
+
+.city-picker-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.city-picker-content {
+  width: 100%;
+  max-height: 80vh;
+  background-color: #fff;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  overflow: hidden;
+}
+
+.city-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.city-picker-title {
+  font-size: var(--font-lg);
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.city-picker-close {
+  font-size: var(--font-xl);
+  color: var(--text-tertiary);
+  padding: var(--spacing-xs);
+}
+
+.city-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: var(--spacing-lg);
+  gap: var(--spacing-md);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.city-item {
+  flex: 0 0 calc(25% - var(--spacing-md));
+  padding: var(--spacing-md);
+  text-align: center;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  color: var(--text-secondary);
+}
+
+.city-item.active {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+/* ==================== 加载提示 ==================== */
+
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-content {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-size: var(--font-md);
 }
