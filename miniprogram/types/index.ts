@@ -30,8 +30,8 @@ export interface Hotel {
 export interface RoomType {
   id: number;                    // 房型 ID
   name: string;                  // 房型名称
-  price: number;                 // 价格
-  originalPrice?: number;        // 原价
+  price: number | string;        // 价格（支持数字或字符串）
+  originalPrice?: number | string; // 原价（支持数字或字符串）
   discountType?: string;         // 折扣类型
   discountValue?: number;        // 折扣值
   discountDescription?: string;  // 折扣描述

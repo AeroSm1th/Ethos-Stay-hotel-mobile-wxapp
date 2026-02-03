@@ -73,10 +73,19 @@ Component({
   calculateMinPrice() {
     const hotel = this.properties.hotel as Hotel;
     if (hotel && hotel.roomTypes && hotel.roomTypes.length > 0) {
-      const prices = hotel.roomTypes.map((room) => room.price);
+      // 将价格字符串转换为数字
+      const prices = hotel.roomTypes.map((room) => {
+        const price = typeof room.price === 'string' ? parseFloat(room.price) : room.price;
+        return price;
+      });
       const minPrice = Math.min(...prices);
       this.setData({
         minPrice: Math.floor(minPrice),
+      });
+    } else {
+      // 如果没有房型数据，设置价格为 0
+      this.setData({
+        minPrice: 0,
       });
     }
   },

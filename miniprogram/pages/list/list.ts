@@ -292,7 +292,11 @@ Page<ListPageData, {}>({
     if (!hotel.roomTypes || hotel.roomTypes.length === 0) {
       return 0;
     }
-    const prices = hotel.roomTypes.map((room) => room.price);
+    // 将价格字符串转换为数字
+    const prices = hotel.roomTypes.map((room) => {
+      const price = typeof room.price === 'string' ? parseFloat(room.price) : room.price;
+      return price;
+    });
     return Math.min(...prices);
   },
 

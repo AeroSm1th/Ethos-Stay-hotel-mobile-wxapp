@@ -14,8 +14,15 @@ function generateRoomType(): fc.Arbitrary<RoomType> {
   return fc.record({
     id: fc.integer({ min: 1, max: 1000 }),
     name: fc.string({ minLength: 1, maxLength: 20 }),
-    price: fc.integer({ min: 100, max: 2000 }),
-    originalPrice: fc.option(fc.integer({ min: 100, max: 2000 })),
+    // 价格可以是数字或字符串
+    price: fc.oneof(
+      fc.integer({ min: 100, max: 2000 }),
+      fc.integer({ min: 100, max: 2000 }).map(n => n.toString())
+    ),
+    originalPrice: fc.option(fc.oneof(
+      fc.integer({ min: 100, max: 2000 }),
+      fc.integer({ min: 100, max: 2000 }).map(n => n.toString())
+    )),
     maxGuests: fc.option(fc.integer({ min: 1, max: 6 })),
     bedType: fc.option(fc.string({ minLength: 1, maxLength: 10 })),
     roomSize: fc.option(fc.integer({ min: 10, max: 100 })),
@@ -42,7 +49,11 @@ function getMinPrice(hotel: Hotel): number {
   if (!hotel.roomTypes || hotel.roomTypes.length === 0) {
     return 0;
   }
-  const prices = hotel.roomTypes.map((room) => room.price);
+  // 将价格字符串转换为数字
+  const prices = hotel.roomTypes.map((room) => {
+    const price = typeof room.price === 'string' ? parseFloat(room.price) : room.price;
+    return price;
+  });
   return Math.min(...prices);
 }
 
