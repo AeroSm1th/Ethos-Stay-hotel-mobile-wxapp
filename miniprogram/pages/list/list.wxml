@@ -2,13 +2,13 @@
 <wxs module="listUtils" src="./list.wxs"></wxs>
 <view class="container">
   <!-- 顶部筛选条件展示区域 -->
-  <view class="filter-header" bindtap="showFilterModal">
+  <view class="filter-header">
     <view class="filter-info">
       <text class="city">{{filters.city}}</text>
       <text class="date">{{filters.checkIn}} - {{filters.checkOut}}</text>
       <text class="nights">共{{nights}}晚</text>
     </view>
-    <view class="filter-edit">
+    <view class="filter-edit" bindtap="showFilterModal">
       <text class="edit-icon">✏️</text>
     </view>
   </view>
