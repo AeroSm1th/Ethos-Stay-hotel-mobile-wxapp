@@ -43,10 +43,11 @@ export const POPULAR_CITIES = [
  */
 export const STAR_OPTIONS = [
   { value: 0, label: '不限' },
-  { value: 2, label: '经济型' },
-  { value: 3, label: '舒适型' },
-  { value: 4, label: '高档型' },
-  { value: 5, label: '豪华型' },
+  { value: 1, label: '一星级' },
+  { value: 2, label: '二星级' },
+  { value: 3, label: '三星级' },
+  { value: 4, label: '四星级' },
+  { value: 5, label: '五星级' },
 ];
 
 /**
