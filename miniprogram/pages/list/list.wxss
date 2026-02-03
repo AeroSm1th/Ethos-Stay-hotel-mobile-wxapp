@@ -13,6 +13,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
 
 .filter-info {
@@ -43,6 +44,133 @@
 
 .edit-icon {
   font-size: 32rpx;
+  color: var(--text-secondary);
+}
+
+/* 筛选面板 */
+.filter-panel {
+  background-color: var(--bg-primary);
+  border-bottom: 1rpx solid var(--border-color);
+  padding: var(--spacing-md);
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md) 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.filter-row:last-child {
+  border-bottom: none;
+}
+
+.filter-label {
+  width: 120rpx;
+  font-size: 28rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.filter-value {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+.filter-value .arrow {
+  font-size: 40rpx;
+  color: var(--text-tertiary);
+}
+
+.keyword-input {
+  flex: 1;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 28rpx;
+}
+
+.filter-actions {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1rpx solid var(--border-color);
+}
+
+.apply-button {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--bg-primary);
+  border-radius: var(--radius-md);
+  font-size: 32rpx;
+  padding: var(--spacing-md);
+}
+
+/* 城市选择器弹窗 */
+.city-picker-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.city-picker-content {
+  width: 80%;
+  max-height: 70vh;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.city-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.city-picker-title {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.city-picker-close {
+  font-size: 40rpx;
+  color: var(--text-secondary);
+  padding: 0 var(--spacing-sm);
+}
+
+.city-list {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.city-item {
+  padding: var(--spacing-md);
+  border-bottom: 1rpx solid var(--border-color);
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.city-item:last-child {
+  border-bottom: none;
+}
+
+.city-item.active {
+  background-color: var(--bg-secondary);
+  color: var(--primary-color);
+  font-weight: 500;
 }
 
 /* 酒店总数 */

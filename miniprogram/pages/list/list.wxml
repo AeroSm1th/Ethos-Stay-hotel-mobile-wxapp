@@ -2,14 +2,80 @@
 <wxs module="listUtils" src="./list.wxs"></wxs>
 <view class="container">
   <!-- 顶部筛选条件展示区域 -->
-  <view class="filter-header">
+  <view class="filter-header" bindtap="toggleFilterPanel">
     <view class="filter-info">
       <text class="city">{{filters.city}}</text>
       <text class="date">{{filters.checkIn}} - {{filters.checkOut}}</text>
       <text class="nights">共{{nights}}晚</text>
     </view>
-    <view class="filter-edit" bindtap="showFilterModal">
-      <text class="edit-icon">✏️</text>
+    <view class="filter-edit">
+      <text class="edit-icon">{{showFilterPanel ? '▲' : '▼'}}</text>
+    </view>
+  </view>
+
+  <!-- 筛选面板 -->
+  <view class="filter-panel" wx:if="{{showFilterPanel}}">
+    <!-- 城市选择 -->
+    <view class="filter-row">
+      <view class="filter-label">城市</view>
+      <view class="filter-value" bindtap="showCityPicker">
+        <text>{{filters.city}}</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 日期选择 -->
+    <view class="filter-row">
+      <view class="filter-label">入住</view>
+      <view class="filter-value">
+        <date-picker value="{{filters.checkIn}}" bind:change="handleCheckInChange" />
+      </view>
+    </view>
+
+    <view class="filter-row">
+      <view class="filter-label">离店</view>
+      <view class="filter-value">
+        <date-picker value="{{filters.checkOut}}" minDate="{{filters.checkIn}}" bind:change="handleCheckOutChange" />
+      </view>
+    </view>
+
+    <!-- 关键词搜索 -->
+    <view class="filter-row">
+      <view class="filter-label">关键词</view>
+      <view class="filter-value">
+        <input 
+          class="keyword-input" 
+          placeholder="位置、品牌或酒店名称" 
+          value="{{filters.keyword}}"
+          bindinput="handleKeywordInput"
+        />
+      </view>
+    </view>
+
+    <!-- 应用筛选按钮 -->
+    <view class="filter-actions">
+      <button class="apply-button" bindtap="applyFilters">应用筛选</button>
+    </view>
+  </view>
+
+  <!-- 城市选择器弹窗 -->
+  <view class="city-picker-modal" wx:if="{{showCityPicker}}" bindtap="hideCityPicker">
+    <view class="city-picker-content" catchtap="{{null}}">
+      <view class="city-picker-header">
+        <text class="city-picker-title">选择城市</text>
+        <text class="city-picker-close" bindtap="hideCityPicker">✕</text>
+      </view>
+      <view class="city-list">
+        <view 
+          class="city-item {{filters.city === item ? 'active' : ''}}"
+          wx:for="{{popularCities}}"
+          wx:key="*this"
+          data-city="{{item}}"
+          bindtap="handleCitySelect"
+        >
+          {{item}}
+        </view>
+      </view>
     </view>
   </view>
 

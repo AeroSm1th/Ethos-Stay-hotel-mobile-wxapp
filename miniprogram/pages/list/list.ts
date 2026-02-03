@@ -2,7 +2,7 @@
 
 import { Hotel, FilterCriteria } from '../../types/index';
 import { hotelApi } from '../../services/api';
-import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS } from '../../utils/constants';
+import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS, POPULAR_CITIES } from '../../utils/constants';
 import { calculateNights } from '../../utils/format';
 
 /**
@@ -28,6 +28,9 @@ interface ListPageData {
   priceOptions: typeof PRICE_OPTIONS; // 价格选项
   selectedStarRating: number; // 选中的星级
   selectedPriceRange: string; // 选中的价格区间
+  showFilterPanel: boolean;  // 是否显示筛选面板
+  showCityPicker: boolean;   // 是否显示城市选择器
+  popularCities: string[];   // 热门城市列表
 }
 
 /**
@@ -60,6 +63,9 @@ Page<ListPageData, {}>({
     priceOptions: PRICE_OPTIONS,
     selectedStarRating: 0,
     selectedPriceRange: '不限',
+    showFilterPanel: false,
+    showCityPicker: false,
+    popularCities: POPULAR_CITIES,
   },
 
   /**
@@ -265,6 +271,128 @@ Page<ListPageData, {}>({
         });
       },
     });
+  },
+
+  /**
+   * 切换筛选面板显示/隐藏
+   */
+  toggleFilterPanel() {
+    this.setData({
+      showFilterPanel: !this.data.showFilterPanel,
+    });
+  },
+
+  /**
+   * 显示城市选择器
+   */
+  showCityPicker() {
+    this.setData({
+      showCityPicker: true,
+    });
+  },
+
+  /**
+   * 隐藏城市选择器
+   */
+  hideCityPicker() {
+    this.setData({
+      showCityPicker: false,
+    });
+  },
+
+  /**
+   * 选择城市
+   */
+  handleCitySelect(e: any) {
+    const { city } = e.currentTarget.dataset;
+    console.log('选择城市:', city);
+
+    this.setData({
+      filters: {
+        ...this.data.filters,
+        city,
+      },
+      showCityPicker: false,
+    });
+  },
+
+  /**
+   * 处理入住日期变化
+   */
+  handleCheckInChange(e: any) {
+    const checkIn = e.detail.value as string;
+    const { filters } = this.data;
+
+    console.log('入住日期变化:', checkIn);
+
+    // 如果入住日期晚于或等于离店日期，不自动调整（让用户自己修改）
+    this.setData({
+      filters: {
+        ...filters,
+        checkIn,
+      },
+    });
+
+    // 重新计算间夜数
+    if (filters.checkOut) {
+      const nights = calculateNights(checkIn, filters.checkOut);
+      this.setData({ nights });
+    }
+  },
+
+  /**
+   * 处理离店日期变化
+   */
+  handleCheckOutChange(e: any) {
+    const checkOut = e.detail.value as string;
+    const { filters } = this.data;
+
+    console.log('离店日期变化:', checkOut);
+
+    this.setData({
+      filters: {
+        ...filters,
+        checkOut,
+      },
+    });
+
+    // 重新计算间夜数
+    if (filters.checkIn) {
+      const nights = calculateNights(filters.checkIn, checkOut);
+      this.setData({ nights });
+    }
+  },
+
+  /**
+   * 处理关键词输入
+   */
+  handleKeywordInput(e: any) {
+    const keyword = e.detail.value as string;
+    console.log('关键词输入:', keyword);
+
+    this.setData({
+      filters: {
+        ...this.data.filters,
+        keyword,
+      },
+    });
+  },
+
+  /**
+   * 应用筛选条件
+   */
+  applyFilters() {
+    console.log('应用筛选条件:', this.data.filters);
+
+    // 隐藏筛选面板
+    this.setData({
+      showFilterPanel: false,
+      page: 1,
+      hasMore: true,
+    });
+
+    // 重新加载酒店数据
+    this.loadHotels(false);
   },
 
   /**
