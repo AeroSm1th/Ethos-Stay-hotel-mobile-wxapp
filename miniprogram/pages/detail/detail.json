@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "酒店详情",
+  "navigationStyle": "custom",
   "usingComponents": {},
   "renderer": "skyline",
   "rendererOptions": {

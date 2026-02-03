@@ -199,10 +199,17 @@ Page<SearchPageData, {}>({
         recommendHotels,
         loading: false,
       });
+      
+      console.log('查询页: 推荐酒店加载完成，数量:', hotels.length);
     } catch (error) {
       console.error('加载推荐酒店失败:', error);
-      this.setData({ loading: false });
-      showError('加载推荐酒店失败');
+      // 确保无论如何都关闭 loading 状态
+      this.setData({ 
+        loading: false,
+        bannerHotels: [],
+        recommendHotels: []
+      });
+      showError('加载推荐酒店失败，请检查网络连接');
     }
   },
 
