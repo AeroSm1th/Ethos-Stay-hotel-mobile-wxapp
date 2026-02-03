@@ -1,0 +1,137 @@
+/* 酒店卡片组件样式 */
+
+.hotel-card {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.hotel-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.12);
+}
+
+/* 图片区域 */
+.hotel-card__image {
+  width: 240rpx;
+  height: 180rpx;
+  flex-shrink: 0;
+  background: #f5f5f5;
+}
+
+.hotel-card__img {
+  width: 100%;
+  height: 100%;
+}
+
+/* 内容区域 */
+.hotel-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx;
+  min-width: 0;
+}
+
+/* 头部：名称和星级 */
+.hotel-card__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.hotel-card__name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 12rpx;
+}
+
+.hotel-card__stars {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.hotel-card__star {
+  font-size: 24rpx;
+  color: #ffa500;
+  margin-left: 2rpx;
+}
+
+/* 地址 */
+.hotel-card__address {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.hotel-card__address-icon {
+  font-size: 24rpx;
+  margin-right: 8rpx;
+}
+
+.hotel-card__address-text {
+  font-size: 24rpx;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* 标签 */
+.hotel-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.hotel-card__tag {
+  font-size: 20rpx;
+  color: #0086f6;
+  background: #e6f4ff;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  white-space: nowrap;
+}
+
+/* 底部：价格 */
+.hotel-card__footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: auto;
+}
+
+.hotel-card__price {
+  display: flex;
+  align-items: baseline;
+}
+
+.hotel-card__price-label {
+  font-size: 24rpx;
+  color: #ff6b00;
+  font-weight: 600;
+}
+
+.hotel-card__price-value {
+  font-size: 40rpx;
+  color: #ff6b00;
+  font-weight: 700;
+  margin: 0 4rpx;
+}
+
+.hotel-card__price-unit {
+  font-size: 24rpx;
+  color: #ff6b00;
+}

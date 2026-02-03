@@ -34,7 +34,7 @@ const mockStorageInfo = { keys: [] as string[] };
   }),
   getStorageInfoSync: jest.fn(() => {
     return { keys: Array.from(mockStorageInfo.keys) };
-  })
+  }),
 };
 
 describe('缓存服务属性测试', () => {
@@ -68,9 +68,9 @@ describe('缓存服务属性测试', () => {
 
             // 验证：读取的值应该等于保存的值
             expect(retrieved).toBe(data);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -83,9 +83,9 @@ describe('缓存服务属性测试', () => {
             cacheService.set(key, data);
             const retrieved = cacheService.get<number>(key);
             expect(retrieved).toBe(data);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -96,7 +96,7 @@ describe('缓存服务属性测试', () => {
           fc.record({
             id: fc.integer({ min: 1, max: 100000 }),
             name: fc.string({ minLength: 1, maxLength: 20 }),
-            value: fc.float({ min: 0, max: 1000 })
+            value: fc.float({ min: 0, max: 1000 }),
           }),
           (key, data) => {
             cacheService.set(key, data);
@@ -106,9 +106,9 @@ describe('缓存服务属性测试', () => {
             expect(retrieved?.id).toBe(data.id);
             expect(retrieved?.name).toBe(data.name);
             expect(retrieved?.value).toBeCloseTo(data.value, 5);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -123,9 +123,9 @@ describe('缓存服务属性测试', () => {
             
             expect(retrieved).not.toBeNull();
             expect(retrieved).toEqual(data);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -138,9 +138,9 @@ describe('缓存服务属性测试', () => {
             cacheService.set(key, data);
             const retrieved = cacheService.get<boolean>(key);
             expect(retrieved).toBe(data);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -151,13 +151,13 @@ describe('缓存服务属性测试', () => {
           fc.record({
             user: fc.record({
               id: fc.integer({ min: 1, max: 10000 }),
-              name: fc.string({ minLength: 1, maxLength: 20 })
+              name: fc.string({ minLength: 1, maxLength: 20 }),
             }),
             items: fc.array(fc.integer({ min: 1, max: 100 }), { maxLength: 10 }),
             metadata: fc.record({
               timestamp: fc.integer({ min: 0, max: Date.now() }),
-              version: fc.string({ minLength: 1, maxLength: 10 })
-            })
+              version: fc.string({ minLength: 1, maxLength: 10 }),
+            }),
           }),
           (key, data) => {
             cacheService.set(key, data);
@@ -169,9 +169,9 @@ describe('缓存服务属性测试', () => {
             expect(retrieved?.items).toEqual(data.items);
             expect(retrieved?.metadata.timestamp).toBe(data.metadata.timestamp);
             expect(retrieved?.metadata.version).toBe(data.metadata.version);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -200,9 +200,9 @@ describe('缓存服务属性测试', () => {
 
             // 验证：应该返回 null
             expect(retrieved).toBeNull();
-          }
+          },
         ),
-        { numRuns: 50 } // 减少运行次数，因为有等待时间
+        { numRuns: 50 }, // 减少运行次数，因为有等待时间
       );
     });
 
@@ -218,9 +218,9 @@ describe('缓存服务属性测试', () => {
 
             // 验证：缓存应该有效
             expect(cacheService.isValid(key)).toBe(true);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -241,9 +241,9 @@ describe('缓存服务属性测试', () => {
 
             // 验证：缓存应该无效
             expect(cacheService.isValid(key)).toBe(false);
-          }
+          },
         ),
-        { numRuns: 50 }
+        { numRuns: 50 },
       );
     });
   });
@@ -267,9 +267,9 @@ describe('缓存服务属性测试', () => {
 
             // 验证：缓存应该不存在
             expect(cacheService.get(key)).toBeNull();
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -279,9 +279,9 @@ describe('缓存服务属性测试', () => {
           fc.array(
             fc.tuple(
               fc.string({ minLength: 1, maxLength: 50 }),
-              fc.string({ minLength: 1, maxLength: 100 })
+              fc.string({ minLength: 1, maxLength: 100 }),
             ),
-            { minLength: 2, maxLength: 5 }
+            { minLength: 2, maxLength: 5 },
           ),
           fc.integer({ min: 0, max: 4 }),
           (cacheItems, clearIndex) => {
@@ -311,9 +311,9 @@ describe('缓存服务属性测试', () => {
                 expect(cacheService.get(key)).toBe(data);
               }
             });
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -323,9 +323,9 @@ describe('缓存服务属性测试', () => {
           fc.array(
             fc.tuple(
               fc.string({ minLength: 1, maxLength: 50 }),
-              fc.string({ minLength: 1, maxLength: 100 })
+              fc.string({ minLength: 1, maxLength: 100 }),
             ),
-            { minLength: 1, maxLength: 10 }
+            { minLength: 1, maxLength: 10 },
           ),
           (cacheItems) => {
             // 确保键不重复
@@ -345,9 +345,9 @@ describe('缓存服务属性测试', () => {
             cacheItems.forEach(([key]) => {
               expect(cacheService.get(key)).toBeNull();
             });
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -372,9 +372,9 @@ describe('缓存服务属性测试', () => {
 
             // 验证：应该是最后一个值
             expect(retrieved).toBe(values[values.length - 1]);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -393,9 +393,9 @@ describe('缓存服务属性测试', () => {
 
             // 验证：应该返回 null
             expect(retrieved).toBeNull();
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -406,9 +406,9 @@ describe('缓存服务属性测试', () => {
           (key) => {
             // 验证：不存在的缓存应该无效
             expect(cacheService.isValid(key)).toBe(false);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -433,9 +433,9 @@ describe('缓存服务属性测试', () => {
             // 验证：应该能读取到数据
             expect(retrieved).toBe(data);
             expect(cacheService.isValid(key)).toBe(true);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });

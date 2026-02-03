@@ -1,0 +1,57 @@
+/* 日期选择器组件样式 */
+
+.date-picker {
+  width: 100%;
+}
+
+.date-picker__content {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  border: 2rpx solid #e5e5e5;
+  transition: all 0.3s ease;
+}
+
+.date-picker__content:active {
+  background: #f8f8f8;
+  border-color: #0086f6;
+}
+
+.date-picker__label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
+.date-picker__value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date-picker__text {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.date-picker__icon {
+  font-size: 32rpx;
+  color: #0086f6;
+}
+
+/* 禁用状态 */
+.date-picker--disabled .date-picker__content {
+  background: #f5f5f5;
+  border-color: #e5e5e5;
+}
+
+.date-picker--disabled .date-picker__text {
+  color: #999;
+}
+
+.date-picker--disabled .date-picker__icon {
+  color: #ccc;
+}

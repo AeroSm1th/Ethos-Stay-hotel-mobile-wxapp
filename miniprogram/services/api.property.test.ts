@@ -17,7 +17,7 @@ import { Request } from '../utils/request';
 const mockWxRequest = jest.fn();
 (global as any).wx = {
   request: mockWxRequest,
-  showToast: jest.fn()
+  showToast: jest.fn(),
 };
 
 describe('API 服务属性测试', () => {
@@ -36,7 +36,7 @@ describe('API 服务属性测试', () => {
       config.success({
         statusCode: 200,
         data: { data: [], page: 1, pageSize: 10, total: 0, totalPages: 0 },
-        header: {}
+        header: {},
       });
     });
 
@@ -60,7 +60,7 @@ describe('API 服务属性测试', () => {
             city: fc.option(fc.constantFrom('北京', '上海', '广州', '深圳', '杭州'), { nil: undefined }),
             starRating: fc.option(fc.integer({ min: 1, max: 5 }), { nil: undefined }),
             minPrice: fc.option(fc.integer({ min: 0, max: 1000 }), { nil: undefined }),
-            maxPrice: fc.option(fc.integer({ min: 100, max: 5000 }), { nil: undefined })
+            maxPrice: fc.option(fc.integer({ min: 100, max: 5000 }), { nil: undefined }),
           }),
           async (params) => {
             // 调用 API
@@ -79,9 +79,9 @@ describe('API 服务属性测试', () => {
                 expect(requestUrl).toContain(`${key}=${encodeURIComponent(value)}`);
               }
             });
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -108,7 +108,7 @@ describe('API 服务属性测试', () => {
               starRating,
               city: undefined,
               minPrice: null as any,
-              maxPrice: undefined
+              maxPrice: undefined,
             });
 
             const requestUrl = capturedConfig.url;
@@ -121,9 +121,9 @@ describe('API 服务属性测试', () => {
             expect(requestUrl).not.toContain('city=');
             expect(requestUrl).not.toContain('minPrice=');
             expect(requestUrl).not.toContain('maxPrice=');
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -146,9 +146,9 @@ describe('API 服务属性测试', () => {
             if (keyword.includes('&')) {
               expect(requestUrl).toContain('%26');
             }
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -169,9 +169,9 @@ describe('API 服务属性测试', () => {
             id: 1,
             nameCn: '测试酒店',
             address: '测试地址',
-            starRating: 4
+            starRating: 4,
           },
-          header: {}
+          header: {},
         });
       });
     });
@@ -194,9 +194,9 @@ describe('API 服务属性测试', () => {
 
             // 验证请求方法
             expect(capturedConfig.method).toBe('GET');
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -212,9 +212,9 @@ describe('API 服务属性测试', () => {
             // 详情请求不应该有查询参数
             const urlParts = requestUrl.split('?');
             expect(urlParts.length).toBe(1);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -239,9 +239,9 @@ describe('API 服务属性测试', () => {
             expect(url1).not.toBe(url2);
             expect(url1).toContain(`/${id1}`);
             expect(url2).toContain(`/${id2}`);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -255,14 +255,14 @@ describe('API 服务属性测试', () => {
         fc.asyncProperty(
           fc.record({
             page: fc.option(fc.integer({ min: 1, max: 100 }), { nil: undefined }),
-            keyword: fc.option(fc.string({ minLength: 1, maxLength: 20 }), { nil: undefined })
+            keyword: fc.option(fc.string({ minLength: 1, maxLength: 20 }), { nil: undefined }),
           }),
           async (params) => {
             await apiService.getHotelList(params);
             expect(capturedConfig.method).toBe('GET');
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -273,9 +273,9 @@ describe('API 服务属性测试', () => {
           async (hotelId) => {
             await apiService.getHotelDetail(hotelId);
             expect(capturedConfig.method).toBe('GET');
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -292,9 +292,9 @@ describe('API 服务属性测试', () => {
             await apiService.getHotelDetail(hotelId);
             expect(capturedConfig.header).toBeDefined();
             expect(capturedConfig.header['Content-Type']).toBe('application/json');
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });

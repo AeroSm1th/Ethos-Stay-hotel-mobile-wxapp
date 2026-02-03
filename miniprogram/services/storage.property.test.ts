@@ -32,7 +32,7 @@ const mockStorage: Map<string, string> = new Map();
   }),
   clearStorageSync: jest.fn(() => {
     mockStorage.clear();
-  })
+  }),
 };
 
 describe('存储服务属性测试', () => {
@@ -64,9 +64,9 @@ describe('存储服务属性测试', () => {
 
             // 验证：读取的值应该等于保存的值
             expect(retrieved).toBe(city);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -78,9 +78,9 @@ describe('存储服务属性测试', () => {
             storageService.saveRecentCity(city);
             const retrieved = storageService.getRecentCity();
             expect(retrieved).toBe(city);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -99,9 +99,9 @@ describe('存储服务属性测试', () => {
 
             // 验证：应该是最后一个城市
             expect(retrieved).toBe(cities[cities.length - 1]);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -135,9 +135,9 @@ describe('存储服务属性测试', () => {
             // 验证：收藏列表应该包含该 ID
             const favorites = storageService.getFavorites();
             expect(favorites).toContain(hotelId);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -163,9 +163,9 @@ describe('存储服务属性测试', () => {
               expect(retrieved).toContain(id);
               expect(storageService.isFavorite(id)).toBe(true);
             });
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -187,9 +187,9 @@ describe('存储服务属性测试', () => {
             // 验证：收藏列表不应该包含该 ID
             const favorites = storageService.getFavorites();
             expect(favorites).not.toContain(hotelId);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -208,9 +208,9 @@ describe('存储服务属性测试', () => {
             const favorites = storageService.getFavorites();
             const count = favorites.filter(id => id === hotelId).length;
             expect(count).toBe(1);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -236,9 +236,9 @@ describe('存储服务属性测试', () => {
             uniqueIds.forEach(id => {
               expect(favorites).toContain(id);
             });
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -254,7 +254,7 @@ describe('存储服务属性测试', () => {
       id: fc.integer({ min: 1, max: 100000 }),
       nameCn: fc.string({ minLength: 2, maxLength: 20 }),
       address: fc.string({ minLength: 5, maxLength: 50 }),
-      starRating: fc.integer({ min: 1, max: 5 })
+      starRating: fc.integer({ min: 1, max: 5 }),
     }) as fc.Arbitrary<Hotel>;
 
     it('对于任意酒店，保存后应该出现在历史记录的第一位', () => {
@@ -274,9 +274,9 @@ describe('存储服务属性测试', () => {
             // 验证：该酒店应该在第一位
             expect(history[0].id).toBe(hotel.id);
             expect(history[0].nameCn).toBe(hotel.nameCn);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -287,7 +287,7 @@ describe('存储服务属性测试', () => {
           (hotels) => {
             // 确保酒店 ID 不重复
             const uniqueHotels = hotels.filter((hotel, index, self) => 
-              self.findIndex(h => h.id === hotel.id) === index
+              self.findIndex(h => h.id === hotel.id) === index,
             );
 
             fc.pre(uniqueHotels.length >= 2);
@@ -307,9 +307,9 @@ describe('存储服务属性测试', () => {
             if (uniqueHotels.length >= 2) {
               expect(history[1].id).toBe(uniqueHotels[uniqueHotels.length - 2].id);
             }
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -320,7 +320,7 @@ describe('存储服务属性测试', () => {
           (hotels) => {
             // 确保酒店 ID 不重复
             const uniqueHotels = hotels.filter((hotel, index, self) => 
-              self.findIndex(h => h.id === hotel.id) === index
+              self.findIndex(h => h.id === hotel.id) === index,
             );
 
             fc.pre(uniqueHotels.length > MAX_HISTORY_COUNT);
@@ -336,9 +336,9 @@ describe('存储服务属性测试', () => {
             // 验证：历史记录不超过 MAX_HISTORY_COUNT
             expect(history.length).toBeLessThanOrEqual(MAX_HISTORY_COUNT);
             expect(history.length).toBe(MAX_HISTORY_COUNT);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -350,7 +350,7 @@ describe('存储服务属性测试', () => {
           (hotels, repeatIndex) => {
             // 确保酒店 ID 不重复
             const uniqueHotels = hotels.filter((hotel, index, self) => 
-              self.findIndex(h => h.id === hotel.id) === index
+              self.findIndex(h => h.id === hotel.id) === index,
             );
 
             fc.pre(uniqueHotels.length >= 3);
@@ -374,9 +374,9 @@ describe('存储服务属性测试', () => {
             // 验证：该酒店在历史中只出现一次
             const count = history.filter(h => h.id === repeatHotel.id).length;
             expect(count).toBe(1);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -408,9 +408,9 @@ describe('存储服务属性测试', () => {
             expect(storageService.getRecentCity()).toBe(null);
             expect(storageService.getFavorites()).toEqual([]);
             expect(storageService.getHistory()).toEqual([]);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });

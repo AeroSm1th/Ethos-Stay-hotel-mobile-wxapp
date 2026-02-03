@@ -28,7 +28,7 @@ export class CacheService {
     const cacheItem: CacheItem<T> = {
       data,
       timestamp: Date.now(),
-      expiry
+      expiry,
     };
 
     // 保存到内存缓存

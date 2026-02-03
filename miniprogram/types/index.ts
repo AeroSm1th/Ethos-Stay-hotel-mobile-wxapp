@@ -84,7 +84,7 @@ export interface HotelListResponse {
 /**
  * 酒店详情响应
  */
-export interface HotelDetailResponse extends Hotel {}
+export type HotelDetailResponse = Hotel;
 
 // ==================== 页面数据接口 ====================
 

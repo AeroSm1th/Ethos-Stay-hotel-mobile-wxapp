@@ -10,7 +10,7 @@ describe('Request 网络请求工具', () => {
   beforeEach(() => {
     request = new Request({
       baseURL: 'https://api.example.com',
-      timeout: 5000
+      timeout: 5000,
     });
   });
 
@@ -18,7 +18,7 @@ describe('Request 网络请求工具', () => {
     it('应该正确拼接基础 URL 和请求路径', () => {
       const config = (request as any).beforeRequest({
         url: '/hotels',
-        method: 'GET'
+        method: 'GET',
       });
 
       expect(config.url).toBe('https://api.example.com/hotels');
@@ -27,7 +27,7 @@ describe('Request 网络请求工具', () => {
     it('应该保持完整 URL 不变', () => {
       const config = (request as any).beforeRequest({
         url: 'https://other-api.com/hotels',
-        method: 'GET'
+        method: 'GET',
       });
 
       expect(config.url).toBe('https://other-api.com/hotels');
@@ -38,7 +38,7 @@ describe('Request 网络请求工具', () => {
       const params = {
         city: '北京',
         page: 1,
-        pageSize: 10
+        pageSize: 10,
       };
 
       const queryParams: string[] = [];
@@ -63,7 +63,7 @@ describe('Request 网络请求工具', () => {
         keyword: undefined,
         page: 1,
         empty: null,
-        zero: 0
+        zero: 0,
       };
 
       const queryParams: string[] = [];
@@ -84,7 +84,7 @@ describe('Request 网络请求工具', () => {
 
     it('应该正确编码特殊字符', () => {
       const params = {
-        keyword: '酒店 & 宾馆'
+        keyword: '酒店 & 宾馆',
       };
 
       const value = encodeURIComponent(params.keyword);
@@ -94,7 +94,7 @@ describe('Request 网络请求工具', () => {
     it('应该设置默认请求头', () => {
       const config = (request as any).beforeRequest({
         url: '/hotels',
-        method: 'POST'
+        method: 'POST',
       });
 
       expect(config.header).toHaveProperty('Content-Type', 'application/json');
@@ -105,8 +105,8 @@ describe('Request 网络请求工具', () => {
         url: '/hotels',
         method: 'POST',
         header: {
-          'Authorization': 'Bearer token123'
-        }
+          'Authorization': 'Bearer token123',
+        },
       });
 
       expect(config.header).toHaveProperty('Content-Type', 'application/json');
@@ -119,7 +119,7 @@ describe('Request 网络请求工具', () => {
       const response = {
         statusCode: 404,
         data: null,
-        header: {}
+        header: {},
       };
 
       expect(() => {
@@ -131,7 +131,7 @@ describe('Request 网络请求工具', () => {
       const response = {
         statusCode: 500,
         data: null,
-        header: {}
+        header: {},
       };
 
       expect(() => {
@@ -143,7 +143,7 @@ describe('Request 网络请求工具', () => {
       const response = {
         statusCode: 200,
         data: { message: 'success' },
-        header: {}
+        header: {},
       };
 
       const result = (request as any).afterResponse(response);
@@ -152,13 +152,13 @@ describe('Request 网络请求工具', () => {
 
     it('应该识别超时错误', () => {
       const error = {
-        errMsg: 'request:fail timeout'
+        errMsg: 'request:fail timeout',
       };
 
       // 模拟 wx.showToast
       const mockShowToast = jest.fn();
       (global as any).wx = {
-        showToast: mockShowToast
+        showToast: mockShowToast,
       };
 
       (request as any).handleError(error);
@@ -166,19 +166,19 @@ describe('Request 网络请求工具', () => {
       expect(mockShowToast).toHaveBeenCalledWith({
         title: '请求超时，请稍后重试',
         icon: 'none',
-        duration: 2000
+        duration: 2000,
       });
     });
 
     it('应该识别网络连接错误', () => {
       const error = {
-        errMsg: 'request:fail'
+        errMsg: 'request:fail',
       };
 
       // 模拟 wx.showToast
       const mockShowToast = jest.fn();
       (global as any).wx = {
-        showToast: mockShowToast
+        showToast: mockShowToast,
       };
 
       (request as any).handleError(error);
@@ -186,7 +186,7 @@ describe('Request 网络请求工具', () => {
       expect(mockShowToast).toHaveBeenCalledWith({
         title: '无法连接到服务器，请检查网络连接',
         icon: 'none',
-        duration: 2000
+        duration: 2000,
       });
     });
   });

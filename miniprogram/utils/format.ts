@@ -9,7 +9,7 @@
  * @param format 格式字符串，默认 'YYYY-MM-DD'
  * @returns 格式化后的日期字符串
  */
-export function formatDate(date: Date | string, format: string = 'YYYY-MM-DD'): string {
+export function formatDate(date: Date | string, format = 'YYYY-MM-DD'): string {
   const d = typeof date === 'string' ? new Date(date) : date;
 
   const year = d.getFullYear();
@@ -67,7 +67,7 @@ export function getStarRating(rating: number): string {
     2: '二星级',
     3: '三星级',
     4: '四星级',
-    5: '五星级'
+    5: '五星级',
   };
 
   return starMap[rating] || '未评级';
@@ -124,7 +124,7 @@ export function parsePriceRange(range: string): { minPrice?: number; maxPrice?: 
   if (match) {
     return {
       minPrice: parseInt(match[1]),
-      maxPrice: parseInt(match[2])
+      maxPrice: parseInt(match[2]),
     };
   }
 

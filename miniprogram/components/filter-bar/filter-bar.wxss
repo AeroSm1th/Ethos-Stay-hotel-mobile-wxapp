@@ -1,0 +1,96 @@
+/* 筛选栏组件样式 */
+
+.filter-bar {
+  background: #fff;
+  padding: 32rpx;
+}
+
+/* 筛选区块 */
+.filter-bar__section {
+  margin-bottom: 40rpx;
+}
+
+.filter-bar__section:last-of-type {
+  margin-bottom: 32rpx;
+}
+
+.filter-bar__title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+/* 选项列表 */
+.filter-bar__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.filter-bar__option {
+  flex: 0 0 auto;
+  padding: 16rpx 32rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s ease;
+}
+
+.filter-bar__option:active {
+  transform: scale(0.95);
+}
+
+.filter-bar__option--active {
+  background: #e6f4ff;
+  border-color: #0086f6;
+}
+
+.filter-bar__option-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.filter-bar__option--active .filter-bar__option-text {
+  color: #0086f6;
+  font-weight: 600;
+}
+
+/* 操作按钮 */
+.filter-bar__actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 32rpx;
+}
+
+.filter-bar__button {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  border: none;
+  padding: 0;
+}
+
+.filter-bar__button::after {
+  border: none;
+}
+
+.filter-bar__button--reset {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.filter-bar__button--reset:active {
+  background: #e5e5e5;
+}
+
+.filter-bar__button--confirm {
+  background: #0086f6;
+  color: #fff;
+}
+
+.filter-bar__button--confirm:active {
+  background: #0076d6;
+}

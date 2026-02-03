@@ -33,7 +33,7 @@ export const CACHE_EXPIRY = 5 * 60 * 1000;
 export const POPULAR_CITIES = [
   '北京', '上海', '广州', '深圳', '杭州', '成都',
   '西安', '三亚', '南京', '武汉', '厦门', '青岛',
-  '重庆', '苏州', '长沙', '昆明'
+  '重庆', '苏州', '长沙', '昆明',
 ];
 
 // ==================== 筛选选项配置 ====================
@@ -46,7 +46,7 @@ export const STAR_OPTIONS = [
   { value: 2, label: '经济型' },
   { value: 3, label: '舒适型' },
   { value: 4, label: '高档型' },
-  { value: 5, label: '豪华型' }
+  { value: 5, label: '豪华型' },
 ];
 
 /**
@@ -58,7 +58,7 @@ export const PRICE_OPTIONS = [
   '¥150-300',
   '¥300-450',
   '¥450-600',
-  '¥600以上'
+  '¥600以上',
 ];
 
 /**
@@ -67,7 +67,7 @@ export const PRICE_OPTIONS = [
 export const SORT_OPTIONS = [
   { key: 'popular', label: '欢迎度排序' },
   { key: 'distance', label: '位置距离' },
-  { key: 'price', label: '价格/星级' }
+  { key: 'price', label: '价格/星级' },
 ];
 
 // ==================== 本地存储键名 ====================
@@ -79,7 +79,7 @@ export const STORAGE_KEYS = {
   RECENT_CITY: 'recent_city',           // 最近选择的城市
   FAVORITES: 'favorites',               // 收藏的酒店 ID 列表
   HISTORY: 'browse_history',            // 浏览历史
-  CACHE_PREFIX: 'cache_'                // 缓存前缀
+  CACHE_PREFIX: 'cache_',                // 缓存前缀
 };
 
 // ==================== 日期配置 ====================

@@ -1,0 +1,48 @@
+<!--
+  筛选栏组件
+  支持星级、价格区间筛选
+-->
+<view class="filter-bar">
+  <!-- 星级筛选 -->
+  <view class="filter-bar__section">
+    <view class="filter-bar__title">星级</view>
+    <view class="filter-bar__options">
+      <block wx:for="{{starOptions}}" wx:key="value">
+        <view 
+          class="filter-bar__option {{filters.starRating === item.value ? 'filter-bar__option--active' : ''}}"
+          bindtap="handleStarChange"
+          data-value="{{item.value}}"
+        >
+          <text class="filter-bar__option-text">{{item.label}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 价格区间筛选 -->
+  <view class="filter-bar__section">
+    <view class="filter-bar__title">价格区间</view>
+    <view class="filter-bar__options">
+      <block wx:for="{{priceOptions}}" wx:key="index">
+        <view 
+          class="filter-bar__option {{selectedPriceIndex === index ? 'filter-bar__option--active' : ''}}"
+          bindtap="handlePriceChange"
+          data-index="{{index}}"
+          data-value="{{item}}"
+        >
+          <text class="filter-bar__option-text">{{item}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="filter-bar__actions">
+    <button class="filter-bar__button filter-bar__button--reset" bindtap="handleReset">
+      重置
+    </button>
+    <button class="filter-bar__button filter-bar__button--confirm" bindtap="handleConfirm">
+      确定
+    </button>
+  </view>
+</view>

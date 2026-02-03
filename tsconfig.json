@@ -17,8 +17,10 @@
     "strict": true,
     "strictPropertyInitialization": true,
     "lib": ["ES2020"],
+    "types": ["jest", "node"],
     "typeRoots": [
-      "./typings"
+      "./typings",
+      "./node_modules/@types"
     ]
   },
   "include": [

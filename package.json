@@ -4,7 +4,10 @@
   "description": "易宿酒店微信小程序",
   "scripts": {
     "lint": "eslint miniprogram/**/*.ts",
-    "lint:fix": "eslint miniprogram/**/*.ts --fix"
+    "lint:fix": "eslint miniprogram/**/*.ts --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "keywords": [
     "miniprogram",
@@ -13,11 +16,14 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
-    "miniprogram-api-typings": "^2.8.3-1",
+    "@types/jest": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^8.0.0"
+    "eslint": "^8.0.0",
+    "fast-check": "^4.5.3",
+    "jest": "^30.2.0",
+    "miniprogram-api-typings": "^2.8.3-1",
+    "ts-jest": "^29.4.6"
   }
 }

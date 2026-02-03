@@ -70,7 +70,7 @@ export class Request {
           // 错误处理
           this.handleError(error);
           reject(error);
-        }
+        },
       });
     });
   }
@@ -100,7 +100,7 @@ export class Request {
 
     return this.request<T>({
       url: url + queryString,
-      method: 'GET'
+      method: 'GET',
     });
   }
 
@@ -114,7 +114,7 @@ export class Request {
     return this.request<T>({
       url,
       method: 'POST',
-      data
+      data,
     });
   }
 
@@ -132,13 +132,13 @@ export class Request {
     // 设置默认请求头
     const header = {
       'Content-Type': 'application/json',
-      ...config.header
+      ...config.header,
     };
 
     return {
       ...config,
       url: fullUrl,
-      header
+      header,
     };
   }
 
@@ -190,7 +190,7 @@ export class Request {
     wx.showToast({
       title: message,
       icon: 'none',
-      duration: 2000
+      duration: 2000,
     });
   }
 }
@@ -200,7 +200,7 @@ export class Request {
  */
 export const request = new Request({
   baseURL: API_BASE_URL,
-  timeout: REQUEST_TIMEOUT
+  timeout: REQUEST_TIMEOUT,
 });
 
 /**

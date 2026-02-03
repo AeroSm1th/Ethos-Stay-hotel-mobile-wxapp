@@ -34,9 +34,9 @@ describe('格式化工具属性测试', () => {
 
             // 验证：间夜数应该等于偏移天数
             expect(nights).toBe(daysOffset);
-          }
+          },
         ),
-        { numRuns: 100 } // 运行 100 次迭代
+        { numRuns: 100 }, // 运行 100 次迭代
       );
     });
 
@@ -48,9 +48,9 @@ describe('格式化工具属性测试', () => {
             const dateStr = formatDate(date, 'YYYY-MM-DD');
             const nights = calculateNights(dateStr, dateStr);
             expect(nights).toBe(0);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -70,9 +70,9 @@ describe('格式化工具属性测试', () => {
             // 验证：间夜数应该是非负整数
             expect(nights).toBeGreaterThanOrEqual(0);
             expect(Number.isInteger(nights)).toBe(true);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -96,9 +96,9 @@ describe('格式化工具属性测试', () => {
             expect(parsed.getFullYear()).toBe(date.getFullYear());
             expect(parsed.getMonth()).toBe(date.getMonth());
             expect(parsed.getDate()).toBe(date.getDate());
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -115,9 +115,9 @@ describe('格式化工具属性测试', () => {
             const formatted = formatPrice(price);
             expect(formatted).toMatch(/^¥\d+$/);
             expect(formatted).toBe(`¥${price}`);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -134,9 +134,9 @@ describe('格式化工具属性测试', () => {
             const label = getStarRating(rating);
             expect(label).toMatch(/星级$/);
             expect(['一星级', '二星级', '三星级', '四星级', '五星级']).toContain(label);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -147,9 +147,9 @@ describe('格式化工具属性测试', () => {
           (rating) => {
             const label = getStarRating(rating);
             expect(label).toBe('未评级');
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -165,9 +165,9 @@ describe('格式化工具属性测试', () => {
           (score) => {
             const label = getRatingLabel(score);
             expect(['非常好', '很好', '好', '一般', '较差']).toContain(label);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -185,9 +185,9 @@ describe('格式化工具属性测试', () => {
             
             // 评分更高的标签索引应该 >= 当前标签索引
             expect(index2).toBeGreaterThanOrEqual(index1);
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });
@@ -208,9 +208,9 @@ describe('格式化工具属性测试', () => {
           (price) => {
             const result = parsePriceRange(`¥${price}以下`);
             expect(result).toEqual({ maxPrice: price });
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -221,9 +221,9 @@ describe('格式化工具属性测试', () => {
           (price) => {
             const result = parsePriceRange(`¥${price}以上`);
             expect(result).toEqual({ minPrice: price });
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
 
@@ -238,9 +238,9 @@ describe('格式化工具属性测试', () => {
             
             const result = parsePriceRange(`¥${minPrice}-${maxPrice}`);
             expect(result).toEqual({ minPrice, maxPrice });
-          }
+          },
         ),
-        { numRuns: 100 }
+        { numRuns: 100 },
       );
     });
   });

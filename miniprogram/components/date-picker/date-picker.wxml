@@ -1,0 +1,21 @@
+<!--
+  日期选择器组件
+  提供日期选择功能，支持最小日期和最大日期限制
+-->
+<view class="date-picker" bindtap="handlePickerTap">
+  <picker
+    mode="date"
+    value="{{value}}"
+    start="{{minDate}}"
+    end="{{maxDate}}"
+    bindchange="handleDateChange"
+  >
+    <view class="date-picker__content">
+      <text class="date-picker__label" wx:if="{{label}}">{{label}}</text>
+      <view class="date-picker__value">
+        <text class="date-picker__text">{{displayValue}}</text>
+        <text class="date-picker__icon">📅</text>
+      </view>
+    </view>
+  </picker>
+</view>

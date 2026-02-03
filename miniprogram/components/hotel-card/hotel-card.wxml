@@ -1,0 +1,50 @@
+<!--
+  酒店卡片组件
+  显示酒店的基本信息，包括图片、名称、星级、地址、价格、标签
+-->
+<view class="hotel-card" bindtap="handleCardClick">
+  <!-- 酒店图片 -->
+  <view class="hotel-card__image">
+    <image 
+      class="hotel-card__img" 
+      src="{{hotel.images && hotel.images.length > 0 ? hotel.images[0].imageUrl : '/assets/placeholder.png'}}"
+      mode="aspectFill"
+      lazy-load="{{true}}"
+    />
+  </view>
+
+  <!-- 酒店信息 -->
+  <view class="hotel-card__content">
+    <!-- 酒店名称和星级 -->
+    <view class="hotel-card__header">
+      <text class="hotel-card__name">{{hotel.nameCn}}</text>
+      <view class="hotel-card__stars" wx:if="{{hotel.starRating > 0}}">
+        <block wx:for="{{hotel.starRating}}" wx:key="index">
+          <text class="hotel-card__star">★</text>
+        </block>
+      </view>
+    </view>
+
+    <!-- 酒店地址 -->
+    <view class="hotel-card__address">
+      <text class="hotel-card__address-icon">📍</text>
+      <text class="hotel-card__address-text">{{hotel.address}}</text>
+    </view>
+
+    <!-- 酒店设施标签 -->
+    <view class="hotel-card__tags" wx:if="{{hotel.facilities && hotel.facilities.length > 0}}">
+      <block wx:for="{{hotel.facilities}}" wx:key="index" wx:if="{{index < 3}}">
+        <text class="hotel-card__tag">{{item}}</text>
+      </block>
+    </view>
+
+    <!-- 价格信息 -->
+    <view class="hotel-card__footer" wx:if="{{showPrice && hotel.roomTypes && hotel.roomTypes.length > 0}}">
+      <view class="hotel-card__price">
+        <text class="hotel-card__price-label">¥</text>
+        <text class="hotel-card__price-value">{{minPrice}}</text>
+        <text class="hotel-card__price-unit">起</text>
+      </view>
+    </view>
+  </view>
+</view>
