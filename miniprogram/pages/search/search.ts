@@ -8,7 +8,7 @@ import { Hotel } from '../../types/index';
 import { hotelApi } from '../../services/api';
 import { storage } from '../../services/storage';
 import { formatDate, calculateNights } from '../../utils/format';
-import { POPULAR_CITIES, STAR_OPTIONS, PRICE_OPTIONS } from '../../utils/constants';
+import { POPULAR_CITIES, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS } from '../../utils/constants';
 
 /**
  * 查询页数据接口
@@ -52,7 +52,7 @@ Page<SearchPageData, {}>({
     popularCities: POPULAR_CITIES,
     starOptions: STAR_OPTIONS,
     priceOptions: PRICE_OPTIONS,
-    quickTags: ['免费WiFi', '停车场', '游泳池', '健身房', '餐厅', '会议室'],
+    quickTags: POPULAR_FACILITY_TAGS,
   },
 
   /**

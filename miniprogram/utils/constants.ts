@@ -125,3 +125,72 @@ export const NAV_HEADER_THRESHOLD = 200;
  * 主题色
  */
 export const THEME_COLOR = '#0086f6';
+
+// ==================== 设施标签配置 ====================
+
+/**
+ * 完整的设施标签列表（与后端数据库对应）
+ * 按照设施类型分组，方便用户筛选
+ */
+export const FACILITY_TAGS = {
+  /** 基础设施 */
+  basic: ['免费WiFi', '24小时前台', '高速网络', '商务中心'],
+  
+  /** 停车设施 */
+  parking: ['免费停车场', '停车场', '代客泊车', '地下停车场', '充电桩'],
+  
+  /** 餐饮设施 */
+  dining: ['含早餐', '自助早餐', '中西式早餐', '房内早餐', '中餐厅', '西餐厅', '自助餐厅', '酒吧', '咖啡厅', '日料', '米其林餐厅'],
+  
+  /** 健身设施 */
+  fitness: ['健身房', '24小时健身', '私教服务', '瑜伽室', '跑步机'],
+  
+  /** 泳池设施 */
+  pool: ['游泳池', '室内泳池', '室外泳池', '无边泳池', '恒温泳池', '儿童泳池', '私人泳池'],
+  
+  /** SPA 设施 */
+  spa: ['SPA', '按摩', '美容护理', '桑拿', '温泉'],
+  
+  /** 亲子设施 */
+  family: ['亲子', '儿童乐园', '儿童俱乐部', '家庭房', '儿童餐', '亲子主题房'],
+  
+  /** 豪华设施 */
+  luxury: ['豪华', '管家服务', 'VIP服务', '行政酒廊'],
+  
+  /** 会议设施 */
+  meeting: ['会议室', '宴会厅', '多功能厅'],
+};
+
+/**
+ * 热门设施标签（用于首页和列表页快捷筛选）
+ * 按照使用频率和用户需求排序
+ */
+export const POPULAR_FACILITY_TAGS = [
+  '免费WiFi',
+  '免费停车场',
+  '含早餐',
+  '游泳池',
+  '健身房',
+  '亲子',
+  '豪华',
+  'SPA',
+  '24小时前台',
+  '中餐厅',
+  '会议室',
+  '儿童乐园',
+];
+
+/**
+ * 所有设施标签（扁平化列表）
+ */
+export const ALL_FACILITY_TAGS = [
+  ...FACILITY_TAGS.basic,
+  ...FACILITY_TAGS.parking,
+  ...FACILITY_TAGS.dining,
+  ...FACILITY_TAGS.fitness,
+  ...FACILITY_TAGS.pool,
+  ...FACILITY_TAGS.spa,
+  ...FACILITY_TAGS.family,
+  ...FACILITY_TAGS.luxury,
+  ...FACILITY_TAGS.meeting,
+];

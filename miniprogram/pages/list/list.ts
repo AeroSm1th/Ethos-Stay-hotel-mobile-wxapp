@@ -2,7 +2,7 @@
 
 import { Hotel, FilterCriteria } from '../../types/index';
 import { hotelApi } from '../../services/api';
-import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS } from '../../utils/constants';
+import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS } from '../../utils/constants';
 import { calculateNights } from '../../utils/format';
 
 /**
@@ -331,6 +331,7 @@ Page<ListPageData, {}>({
 
   /**
    * 提取快捷标签（从酒店设施中提取常见设施）
+   * 优先显示热门标签，然后显示从酒店数据中提取的高频标签
    */
   extractQuickTags(hotels: Hotel[]): string[] {
     const facilityCount: Record<string, number> = {};
@@ -344,13 +345,23 @@ Page<ListPageData, {}>({
       }
     });
 
-    // 按出现次数排序，取前 6 个
+    // 按出现次数排序
     const sortedFacilities = Object.entries(facilityCount)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 6)
       .map((entry) => entry[0]);
 
-    return sortedFacilities;
+    // 合并热门标签和提取的标签，去重
+    const allTags = [...POPULAR_FACILITY_TAGS];
+    
+    // 添加从酒店数据中提取的高频标签（不在热门标签中的）
+    sortedFacilities.forEach((facility) => {
+      if (!allTags.includes(facility) && allTags.length < 20) {
+        allTags.push(facility);
+      }
+    });
+
+    // 返回前 15 个标签
+    return allTags.slice(0, 15);
   },
 
   /**
