@@ -191,10 +191,11 @@
   flex-wrap: wrap;
   gap: var(--spacing-md);
   align-content: flex-start;
+  justify-content: center;
 }
 
 .city-item {
-  flex: 0 0 calc(25% - var(--spacing-md));
+  flex: 0 0 calc(33.333% - var(--spacing-md));
   padding: var(--spacing-md);
   text-align: center;
   background-color: #f5f5f5;
