@@ -60,10 +60,10 @@ Page<ListPageData, {}>({
   onLoad(options: Record<string, string>) {
     console.log('列表页加载，参数:', options);
 
-    // 解析 URL 查询参数
+    // 解析 URL 查询参数（需要解码 URL 编码的参数）
     const filters: FilterCriteria = {
-      city: options.city || '',
-      keyword: options.keyword || '',
+      city: options.city ? decodeURIComponent(options.city) : '',
+      keyword: options.keyword ? decodeURIComponent(options.keyword) : '',
       checkIn: options.checkIn || '',
       checkOut: options.checkOut || '',
       starRating: options.starRating ? parseInt(options.starRating) : 0,
