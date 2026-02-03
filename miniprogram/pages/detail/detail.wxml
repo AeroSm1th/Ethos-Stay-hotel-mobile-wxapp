@@ -1,0 +1,4 @@
+<!--pages/detail/detail.wxml-->
+<view class="container">
+  <view class="placeholder">酒店详情页</view>
+</view>

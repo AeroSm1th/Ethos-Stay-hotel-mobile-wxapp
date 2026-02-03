@@ -1,0 +1,23 @@
+{
+  "name": "hotel-mobile-wxapp",
+  "version": "1.0.0",
+  "description": "易宿酒店微信小程序",
+  "scripts": {
+    "lint": "eslint miniprogram/**/*.ts",
+    "lint:fix": "eslint miniprogram/**/*.ts --fix"
+  },
+  "keywords": [
+    "miniprogram",
+    "hotel",
+    "wechat"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "miniprogram-api-typings": "^2.8.3-1",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0"
+  }
+}

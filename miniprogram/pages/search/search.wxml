@@ -1,0 +1,4 @@
+<!--pages/search/search.wxml-->
+<view class="container">
+  <view class="placeholder">酒店查询页</view>
+</view>

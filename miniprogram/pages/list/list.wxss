@@ -1,0 +1,7 @@
+/* pages/list/list.wxss */
+
+.placeholder {
+  padding: var(--spacing-xl);
+  text-align: center;
+  color: var(--text-tertiary);
+}
