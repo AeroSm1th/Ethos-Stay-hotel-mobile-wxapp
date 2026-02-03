@@ -4,6 +4,7 @@
  */
 
 import { Hotel } from '../../types/index';
+import { handleImageError } from '../../utils/image';
 
 Component({
   /**
@@ -41,6 +42,13 @@ Component({
       if (hotel) {
         this.triggerEvent('click', { hotel });
       }
+    },
+
+    /**
+     * 处理图片加载错误
+     */
+    handleImageError(e: any) {
+      handleImageError(e);
     },
 
     /**

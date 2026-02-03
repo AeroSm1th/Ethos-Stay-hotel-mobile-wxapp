@@ -12,6 +12,7 @@
       src="{{hotel.images && hotel.images.length > 0 ? hotel.images[0].imageUrl : '/assets/placeholder.png'}}"
       mode="aspectFill"
       lazy-load="{{true}}"
+      binderror="handleImageError"
     />
   </view>
 

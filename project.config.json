@@ -13,17 +13,17 @@
     },
     "coverView": false,
     "postcss": false,
-    "minified": false,
+    "minified": true,
     "enhance": false,
     "showShadowRootInWxmlPanel": false,
     "packNpmRelationList": [],
     "ignoreUploadUnusedFiles": true,
     "compileHotReLoad": false,
     "skylineRenderEnable": true,
-    "es6": false,
+    "es6": true,
     "compileWorklet": false,
     "uglifyFileName": false,
-    "uploadWithSourceMap": true,
+    "uploadWithSourceMap": false,
     "packNpmManually": false,
     "minifyWXSS": true,
     "minifyWXML": true,
@@ -43,7 +43,32 @@
   },
   "libVersion": "trial",
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      {
+        "type": "file",
+        "value": "**/*.test.ts"
+      },
+      {
+        "type": "file",
+        "value": "**/*.property.test.ts"
+      },
+      {
+        "type": "file",
+        "value": "**/*.md"
+      },
+      {
+        "type": "file",
+        "value": "debug-*.js"
+      },
+      {
+        "type": "file",
+        "value": "test-*.js"
+      },
+      {
+        "type": "folder",
+        "value": "node_modules"
+      }
+    ],
     "include": []
   },
   "appid": "wxf712f46079fa6394"

@@ -5,6 +5,7 @@ import { hotelApi } from '../../services/api';
 import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS, ALL_CITIES } from '../../utils/constants';
 import { calculateNights } from '../../utils/format';
 import { showError, showInfo } from '../../utils/toast';
+import { debounce } from '../../utils/performance';
 
 /**
  * 列表页数据接口
