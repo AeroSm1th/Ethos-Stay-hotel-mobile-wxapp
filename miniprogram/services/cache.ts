@@ -45,12 +45,13 @@ export class CacheService {
    */
   get<T>(key: string): T | null {
     // 先从内存缓存获取
-    let cacheItem = this.cache.get(key);
+    let cacheItem: CacheItem<any> | undefined = this.cache.get(key);
 
     // 如果内存中没有，尝试从本地存储获取
     if (!cacheItem) {
-      cacheItem = this.loadFromStorageByKey(key);
-      if (cacheItem) {
+      const loadedItem = this.loadFromStorageByKey(key);
+      if (loadedItem) {
+        cacheItem = loadedItem;
         this.cache.set(key, cacheItem);
       }
     }

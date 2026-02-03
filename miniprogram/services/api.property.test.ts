@@ -11,7 +11,6 @@
 
 import * as fc from 'fast-check';
 import { HotelApiService } from './api';
-import { Request } from '../utils/request';
 
 // 模拟 wx.request
 const mockWxRequest = jest.fn();

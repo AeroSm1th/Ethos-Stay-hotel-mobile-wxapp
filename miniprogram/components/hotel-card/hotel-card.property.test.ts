@@ -82,7 +82,7 @@ function renderHotelCard(hotel: Hotel, showPrice: boolean): {
 
   if (showPrice && hotel.roomTypes && hotel.roomTypes.length > 0) {
     hasPrice = true;
-    const prices = hotel.roomTypes.map((room) => room.price);
+    const prices = hotel.roomTypes.map((room) => Number(room.price));
     minPrice = Math.min(...prices);
   }
 
@@ -139,7 +139,7 @@ describe('酒店卡片组件属性测试', () => {
 
             // 验证：最低价格应该是所有房型价格中的最小值
             if (hotel.roomTypes && hotel.roomTypes.length > 0) {
-              const expectedMinPrice = Math.min(...hotel.roomTypes.map(r => r.price));
+              const expectedMinPrice = Math.min(...hotel.roomTypes.map(r => Number(r.price)));
               expect(rendered.minPrice).toBe(expectedMinPrice);
             }
           },
@@ -174,7 +174,7 @@ describe('酒店卡片组件属性测试', () => {
             if (rendered.minPrice !== null && hotel.roomTypes) {
               // 验证：最低价格应该小于等于所有房型价格
               hotel.roomTypes.forEach((room) => {
-                expect(rendered.minPrice).toBeLessThanOrEqual(room.price);
+                expect(rendered.minPrice).toBeLessThanOrEqual(Number(room.price));
               });
             }
           },

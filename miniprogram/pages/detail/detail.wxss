@@ -1,7 +1,378 @@
 /* pages/detail/detail.wxss */
 
-.placeholder {
-  padding: var(--spacing-xl);
-  text-align: center;
+.container {
+  min-height: 100vh;
+  background-color: var(--bg-secondary);
+  padding-bottom: 120rpx;
+}
+
+/* 加载状态 */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.loading-text {
+  font-size: 28rpx;
   color: var(--text-tertiary);
+}
+
+/* 顶部导航栏 */
+.nav-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 88rpx;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-md);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: all 0.3s ease;
+}
+
+.nav-header.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nav-left,
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.icon-back,
+.icon-collect,
+.icon-share {
+  font-size: 40rpx;
+  color: white;
+  cursor: pointer;
+}
+
+.icon-collect.active {
+  color: #ff4d4f;
+}
+
+.nav-title {
+  flex: 1;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 图片轮播 */
+.image-swiper-container {
+  position: relative;
+  width: 100%;
+  height: 500rpx;
+}
+
+.image-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-image {
+  width: 100%;
+  height: 100%;
+}
+
+.image-indicator {
+  position: absolute;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8rpx 16rpx;
+  border-radius: var(--radius-sm);
+  font-size: 24rpx;
+}
+
+/* 基本信息 */
+.basic-info {
+  background-color: white;
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.hotel-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.hotel-star {
+  margin-bottom: var(--spacing-sm);
+}
+
+.star-text {
+  display: inline-block;
+  padding: 4rpx 12rpx;
+  background-color: #fff7e6;
+  color: #fa8c16;
+  border-radius: var(--radius-sm);
+  font-size: 24rpx;
+}
+
+.hotel-address {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.icon-location {
+  font-size: 28rpx;
+  margin-right: var(--spacing-xs);
+}
+
+.address-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.hotel-rating {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.rating-score {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.rating-label {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+}
+
+.rating-count {
+  font-size: 24rpx;
+  color: var(--text-tertiary);
+}
+
+/* 酒店特色 */
+.hotel-features,
+.hotel-description,
+.nearby-attractions,
+.date-selector,
+.room-types {
+  background-color: white;
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.feature-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.feature-tag {
+  display: inline-block;
+  padding: 8rpx 16rpx;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  font-size: 24rpx;
+}
+
+/* 酒店介绍 */
+.description-text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* 附近景点 */
+.attraction-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.attraction-item {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* 日期选择 */
+.date-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.date-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.date-label {
+  font-size: 24rpx;
+  color: var(--text-tertiary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.date-value {
+  font-size: 28rpx;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.date-divider {
+  display: flex;
+  align-items: center;
+}
+
+.nights-text {
+  font-size: 24rpx;
+  color: var(--text-tertiary);
+}
+
+/* 房型列表 */
+.room-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.room-card {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+
+.room-image {
+  width: 200rpx;
+  height: 150rpx;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.room-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.room-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.room-details {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.room-detail-item {
+  font-size: 24rpx;
+  color: var(--text-tertiary);
+}
+
+.room-amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.amenity-tag {
+  display: inline-block;
+  padding: 4rpx 8rpx;
+  background-color: white;
+  color: var(--text-tertiary);
+  border-radius: var(--radius-xs);
+  font-size: 20rpx;
+}
+
+.room-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.price-value {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.price-unit {
+  font-size: 24rpx;
+  color: var(--text-tertiary);
+}
+
+/* 底部操作栏 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--spacing-lg);
+  box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.price-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-label {
+  font-size: 24rpx;
+  color: var(--text-tertiary);
+}
+
+.btn-book {
+  width: 240rpx;
+  height: 72rpx;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: var(--radius-lg);
+  font-size: 28rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,4 +1,131 @@
 <!--pages/detail/detail.wxml-->
 <view class="container">
-  <view class="placeholder">酒店详情页</view>
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <view class="loading-text">加载中...</view>
+  </view>
+
+  <!-- 酒店详情内容 -->
+  <view wx:else class="detail-content">
+    <!-- 顶部导航栏（滚动后显示） -->
+    <view class="nav-header {{showNavHeader ? 'show' : ''}}">
+      <view class="nav-left" bindtap="onBack">
+        <text class="icon-back">←</text>
+      </view>
+      <view class="nav-title">{{hotel.nameCn}}</view>
+      <view class="nav-right">
+        <text class="icon-collect {{collected ? 'active' : ''}}" bindtap="handleCollect">♥</text>
+        <text class="icon-share" bindtap="onShareAppMessage">⇧</text>
+      </view>
+    </view>
+
+    <!-- 图片轮播 -->
+    <view class="image-swiper-container">
+      <swiper 
+        class="image-swiper" 
+        indicator-dots="{{true}}"
+        indicator-color="rgba(255, 255, 255, 0.5)"
+        indicator-active-color="#0086f6"
+        autoplay="{{false}}"
+        circular="{{true}}"
+        bindchange="onSwiperChange"
+      >
+        <swiper-item wx:for="{{hotel.images}}" wx:key="id">
+          <image class="swiper-image" src="{{item.imageUrl}}" mode="aspectFill" lazy-load />
+        </swiper-item>
+      </swiper>
+      <view class="image-indicator">{{currentImageIndex + 1}}/{{hotel.images.length}}</view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="basic-info">
+      <view class="hotel-name">{{hotel.nameCn}}</view>
+      <view class="hotel-star">
+        <text class="star-text">{{hotel.starRating}}星级</text>
+      </view>
+      <view class="hotel-address">
+        <text class="icon-location">📍</text>
+        <text class="address-text">{{hotel.address}}</text>
+      </view>
+      <view class="hotel-rating">
+        <text class="rating-score">4.5</text>
+        <text class="rating-label">非常好</text>
+        <text class="rating-count">（1234条点评）</text>
+      </view>
+    </view>
+
+    <!-- 酒店特色 -->
+    <view class="hotel-features" wx:if="{{hotel.facilities && hotel.facilities.length > 0}}">
+      <view class="section-title">酒店设施</view>
+      <view class="feature-tags">
+        <text class="feature-tag" wx:for="{{hotel.facilities}}" wx:key="index">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 酒店介绍 -->
+    <view class="hotel-description" wx:if="{{hotel.description}}">
+      <view class="section-title">酒店介绍</view>
+      <view class="description-text">{{hotel.description}}</view>
+    </view>
+
+    <!-- 附近景点 -->
+    <view class="nearby-attractions" wx:if="{{hotel.nearbyAttractions && hotel.nearbyAttractions.length > 0}}">
+      <view class="section-title">附近景点</view>
+      <view class="attraction-list">
+        <text class="attraction-item" wx:for="{{hotel.nearbyAttractions}}" wx:key="index">• {{item}}</text>
+      </view>
+    </view>
+
+    <!-- 日期选择 -->
+    <view class="date-selector">
+      <view class="section-title">入住日期</view>
+      <view class="date-row">
+        <view class="date-item" bindtap="showDatePicker" data-type="checkIn">
+          <text class="date-label">入住</text>
+          <text class="date-value">{{checkIn}}</text>
+        </view>
+        <view class="date-divider">
+          <text class="nights-text">共{{nights}}晚</text>
+        </view>
+        <view class="date-item" bindtap="showDatePicker" data-type="checkOut">
+          <text class="date-label">离店</text>
+          <text class="date-value">{{checkOut}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 房型列表 -->
+    <view class="room-types" id="roomTypes">
+      <view class="section-title">房型选择</view>
+      <view class="room-list">
+        <view class="room-card" wx:for="{{hotel.roomTypes}}" wx:key="id">
+          <image class="room-image" src="{{item.imageUrl || '/images/placeholder.png'}}" mode="aspectFill" lazy-load />
+          <view class="room-info">
+            <view class="room-name">{{item.name}}</view>
+            <view class="room-details">
+              <text class="room-detail-item" wx:if="{{item.bedType}}">{{item.bedType}}</text>
+              <text class="room-detail-item" wx:if="{{item.roomSize}}">{{item.roomSize}}㎡</text>
+              <text class="room-detail-item" wx:if="{{item.maxGuests}}">{{item.maxGuests}}人</text>
+            </view>
+            <view class="room-amenities" wx:if="{{item.amenities && item.amenities.length > 0}}">
+              <text class="amenity-tag" wx:for="{{item.amenities}}" wx:for-item="amenity" wx:key="index">{{amenity}}</text>
+            </view>
+          </view>
+          <view class="room-price">
+            <text class="price-value">¥{{item.price}}</text>
+            <text class="price-unit">/晚</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 底部操作栏 -->
+    <view class="bottom-bar">
+      <view class="price-info">
+        <text class="price-label">最低价</text>
+        <text class="price-value">¥{{hotel.roomTypes && hotel.roomTypes.length > 0 ? hotel.roomTypes[0].price : 0}}</text>
+      </view>
+      <button class="btn-book" bindtap="scrollToRooms">查看房型</button>
+    </view>
+  </view>
 </view>

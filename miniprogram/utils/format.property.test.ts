@@ -14,11 +14,19 @@ describe('格式化工具属性测试', () => {
    * 验证需求: 2.4
    */
   describe('Property 1: 间夜数计算正确性', () => {
+    // 创建有效日期生成器
+    const validDateArbitrary = fc.integer({ min: 0, max: 3652 }).map(days => {
+      const baseDate = new Date('2020-01-01');
+      const date = new Date(baseDate);
+      date.setDate(date.getDate() + days);
+      return date;
+    });
+
     it('对于任意有效日期对，间夜数应该等于日期差', () => {
       fc.assert(
         fc.property(
           // 生成有效的日期对：入住日期和离店日期
-          fc.date({ min: new Date('2020-01-01'), max: new Date('2030-12-31') }),
+          validDateArbitrary,
           fc.integer({ min: 1, max: 365 }), // 间隔天数
           (checkInDate, daysOffset) => {
             // 构造入住日期字符串
@@ -43,7 +51,7 @@ describe('格式化工具属性测试', () => {
     it('对于相同日期，间夜数应该为 0', () => {
       fc.assert(
         fc.property(
-          fc.date({ min: new Date('2020-01-01'), max: new Date('2030-12-31') }),
+          validDateArbitrary,
           (date) => {
             const dateStr = formatDate(date, 'YYYY-MM-DD');
             const nights = calculateNights(dateStr, dateStr);
@@ -57,7 +65,7 @@ describe('格式化工具属性测试', () => {
     it('对于任意日期对，间夜数应该是非负整数', () => {
       fc.assert(
         fc.property(
-          fc.date({ min: new Date('2020-01-01'), max: new Date('2030-12-31') }),
+          validDateArbitrary,
           fc.integer({ min: 0, max: 365 }),
           (checkInDate, daysOffset) => {
             const checkIn = formatDate(checkInDate, 'YYYY-MM-DD');
@@ -81,10 +89,18 @@ describe('格式化工具属性测试', () => {
    * 辅助属性测试：日期格式化
    */
   describe('日期格式化属性测试', () => {
+    // 创建有效日期生成器
+    const validDateArbitrary = fc.integer({ min: 0, max: 36500 }).map(days => {
+      const baseDate = new Date('2000-01-01');
+      const date = new Date(baseDate);
+      date.setDate(date.getDate() + days);
+      return date;
+    });
+
     it('对于任意日期，格式化后应该符合 YYYY-MM-DD 格式', () => {
       fc.assert(
         fc.property(
-          fc.date({ min: new Date('2000-01-01'), max: new Date('2099-12-31') }),
+          validDateArbitrary,
           (date) => {
             const formatted = formatDate(date, 'YYYY-MM-DD');
             
@@ -174,7 +190,7 @@ describe('格式化工具属性测试', () => {
     it('评分越高，标签应该越好', () => {
       fc.assert(
         fc.property(
-          fc.float({ min: 0, max: 4.9 }),
+          fc.float({ min: 0, max: Math.fround(4.9) }),
           (score) => {
             const label1 = getRatingLabel(score);
             const label2 = getRatingLabel(score + 0.1);

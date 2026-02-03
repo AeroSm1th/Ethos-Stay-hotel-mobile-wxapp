@@ -8,7 +8,6 @@
 
 import * as fc from 'fast-check';
 import { CacheService } from './cache';
-import { CACHE_EXPIRY } from '../utils/constants';
 
 // 模拟微信存储 API
 const mockStorage: Map<string, string> = new Map();

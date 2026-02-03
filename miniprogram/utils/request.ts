@@ -61,7 +61,7 @@ export class Request {
           try {
             // 响应拦截器
             const data = this.afterResponse(res);
-            resolve(data);
+            resolve(data as T);
           } catch (error) {
             reject(error);
           }
