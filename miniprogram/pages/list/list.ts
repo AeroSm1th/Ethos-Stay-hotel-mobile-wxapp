@@ -101,6 +101,13 @@ Page<ListPageData, {}>({
       ? calculateNights(filters.checkIn, filters.checkOut)
       : 1;
 
+    console.log('列表页初始化数据:');
+    console.log('  selectedStarRating:', filters.starRating || 0);
+    console.log('  selectedPriceRange:', selectedPriceRange);
+    console.log('  selectedTags:', selectedTags);
+    console.log('  starOptions:', STAR_OPTIONS);
+    console.log('  priceOptions:', PRICE_OPTIONS);
+
     this.setData({
       filters,
       nights,
