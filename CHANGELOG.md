@@ -3,6 +3,18 @@
 ## [未发布]
 
 ### 修复
+- **价格区间筛选功能** (2026-02-03)
+  - 修复了所有价格区间选项卡查询列表不正确的问题
+  - 后端 API 接受 `minPrice` 和 `maxPrice` 两个数字参数
+  - 前端需要将价格区间字符串（如 "¥150-300"）解析为 `minPrice` 和 `maxPrice`
+  - 添加了 `parsePriceRange` 方法来解析价格区间字符串
+  - 支持的格式：
+    - "不限" → 不传递价格参数
+    - "¥150以下" → maxPrice: 150
+    - "¥600以上" → minPrice: 600
+    - "¥150-300" → minPrice: 150, maxPrice: 300
+  - 相关文件：`miniprogram/pages/search/search.ts`
+
 - **hotel-card 组件方法定义错误** (2026-02-03)
   - 修复了 `calculateMinPrice is not a function` 错误
   - 将 `calculateMinPrice` 方法从组件顶层移到 `methods` 对象中
