@@ -2,7 +2,7 @@
 
 import { Hotel, FilterCriteria } from '../../types/index';
 import { hotelApi } from '../../services/api';
-import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS, POPULAR_CITIES } from '../../utils/constants';
+import { PAGE_SIZE, SORT_OPTIONS, STAR_OPTIONS, PRICE_OPTIONS, POPULAR_FACILITY_TAGS, ALL_CITIES } from '../../utils/constants';
 import { calculateNights } from '../../utils/format';
 
 /**
@@ -65,7 +65,7 @@ Page<ListPageData, {}>({
     selectedPriceRange: '不限',
     showFilterPanel: false,
     showCityPicker: false,
-    popularCities: POPULAR_CITIES,
+    popularCities: ALL_CITIES,
   },
 
   /**
