@@ -131,7 +131,7 @@ Page<ListPageData, {}>({
    * @param append 是否追加到现有列表
    */
   async loadHotels(append: boolean) {
-    const { filters, page, pageSize, hotels } = this.data;
+    const { filters, page, pageSize, hotels, sortBy, selectedTags } = this.data;
 
     // 设置加载状态
     if (append) {
@@ -155,18 +155,34 @@ Page<ListPageData, {}>({
 
       console.log('酒店列表响应:', response);
 
-      // 更新数据
-      const newHotels = append ? [...hotels, ...response.data] : response.data;
-      const hasMore = response.page < response.totalPages;
+      // 合并数据
+      let allHotels = append ? [...this.data.allHotels, ...response.data] : response.data;
+      
+      // 如果有排序，对所有酒店进行排序
+      if (sortBy && sortBy !== 'popular') {
+        console.log('应用排序:', sortBy);
+        allHotels = this.applySorting(allHotels, sortBy);
+      }
 
-      // 保存所有酒店数据（用于筛选）
-      const allHotels = append ? [...this.data.allHotels, ...response.data] : response.data;
+      // 如果有标签筛选，应用筛选
+      let displayHotels = allHotels;
+      if (selectedTags.length > 0) {
+        console.log('应用标签筛选:', selectedTags);
+        displayHotels = allHotels.filter((hotel) => {
+          if (!hotel.facilities || hotel.facilities.length === 0) {
+            return false;
+          }
+          return selectedTags.every((tag) => hotel.facilities!.includes(tag));
+        });
+      }
+
+      const hasMore = response.page < response.totalPages;
 
       // 提取快捷标签
       const quickTags = this.extractQuickTags(allHotels);
 
       this.setData({
-        hotels: newHotels,
+        hotels: displayHotels,
         allHotels,
         total: response.total,
         hasMore,
@@ -409,16 +425,10 @@ Page<ListPageData, {}>({
   },
 
   /**
-   * 本地排序酒店列表
+   * 应用排序逻辑（不更新 state）
    */
-  sortHotels(sortBy: string) {
-    const { allHotels, selectedTags } = this.data;
-    
-    console.log('开始排序，排序方式:', sortBy);
-    console.log('酒店总数:', allHotels.length);
-    
-    // 首先对所有酒店进行排序
-    let sortedHotels = [...allHotels];
+  applySorting(hotels: Hotel[], sortBy: string): Hotel[] {
+    const sortedHotels = [...hotels];
 
     switch (sortBy) {
       case 'popular':
@@ -433,18 +443,31 @@ Page<ListPageData, {}>({
 
       case 'price':
         // 价格/星级排序（按最低价格升序）
-        console.log('按价格排序...');
         sortedHotels.sort((a, b) => {
           const priceA = this.getMinPrice(a);
           const priceB = this.getMinPrice(b);
           return priceA - priceB;
         });
-        console.log('价格排序完成');
         break;
 
       default:
         break;
     }
+
+    return sortedHotels;
+  },
+
+  /**
+   * 本地排序酒店列表
+   */
+  sortHotels(sortBy: string) {
+    const { allHotels, selectedTags } = this.data;
+    
+    console.log('开始排序，排序方式:', sortBy);
+    console.log('酒店总数:', allHotels.length);
+    
+    // 对所有酒店进行排序
+    const sortedHotels = this.applySorting(allHotels, sortBy);
 
     // 如果有标签筛选，应用筛选
     let finalHotels = sortedHotels;
