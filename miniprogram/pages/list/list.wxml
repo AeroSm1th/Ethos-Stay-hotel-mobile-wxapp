@@ -27,14 +27,14 @@
     <!-- 日期选择 -->
     <view class="filter-row">
       <view class="filter-label">入住</view>
-      <view class="filter-value">
+      <view class="filter-value date-picker-wrapper">
         <date-picker value="{{filters.checkIn}}" bind:change="handleCheckInChange" />
       </view>
     </view>
 
     <view class="filter-row">
       <view class="filter-label">离店</view>
-      <view class="filter-value">
+      <view class="filter-value date-picker-wrapper">
         <date-picker value="{{filters.checkOut}}" minDate="{{filters.checkIn}}" bind:change="handleCheckOutChange" />
       </view>
     </view>

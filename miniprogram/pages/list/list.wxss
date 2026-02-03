@@ -86,6 +86,33 @@
   color: var(--text-tertiary);
 }
 
+.date-picker-wrapper {
+  flex: 1;
+}
+
+/* 覆盖 date-picker 组件的默认样式 */
+.filter-row .date-picker {
+  width: 100%;
+}
+
+.filter-row .date-picker__content {
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.filter-row .date-picker__text {
+  font-size: 28rpx;
+  color: var(--text-secondary);
+  font-weight: normal;
+}
+
+.filter-row .date-picker__icon {
+  font-size: 28rpx;
+  color: var(--text-tertiary);
+}
+
 .keyword-input {
   flex: 1;
   padding: var(--spacing-xs) var(--spacing-sm);
@@ -118,17 +145,19 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   z-index: 1000;
 }
 
 .city-picker-content {
-  width: 80%;
+  width: 100%;
   max-height: 70vh;
   background-color: var(--bg-primary);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .city-picker-header {
@@ -137,6 +166,8 @@
   align-items: center;
   padding: var(--spacing-md);
   border-bottom: 1rpx solid var(--border-color);
+  background-color: var(--bg-primary);
+  flex-shrink: 0;
 }
 
 .city-picker-title {
@@ -152,13 +183,22 @@
 }
 
 .city-list {
-  max-height: 60vh;
+  flex: 1;
   overflow-y: auto;
+  background-color: var(--bg-primary);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-content: flex-start;
 }
 
 .city-item {
+  flex: 0 0 calc(25% - var(--spacing-md));
   padding: var(--spacing-md);
-  border-bottom: 1rpx solid var(--border-color);
+  text-align: center;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
   font-size: 28rpx;
   color: var(--text-primary);
 }
@@ -168,8 +208,8 @@
 }
 
 .city-item.active {
-  background-color: var(--bg-secondary);
-  color: var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--bg-primary);
   font-weight: 500;
 }
 
