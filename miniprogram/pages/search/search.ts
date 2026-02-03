@@ -348,8 +348,7 @@ Page<SearchPageData, {}>({
       selectedTags: [...selectedTags],
     });
     
-    // 重新加载推荐酒店
-    this.loadRecommendHotels();
+    // 不立即重新加载推荐酒店，只在点击"搜索酒店"按钮时才筛选
   },
 
   /**
