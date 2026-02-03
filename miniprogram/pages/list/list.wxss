@@ -88,11 +88,14 @@
 
 .date-picker-wrapper {
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-/* 覆盖 date-picker 组件的默认样式 */
+/* 覆盖 date-picker 组件的默认样式，使其适应筛选面板 */
 .filter-row .date-picker {
-  width: 100%;
+  width: auto;
 }
 
 .filter-row .date-picker__content {
@@ -100,6 +103,15 @@
   border: none;
   padding: 0;
   border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.filter-row .date-picker__value {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
 }
 
 .filter-row .date-picker__text {
