@@ -110,16 +110,37 @@ Page<SearchPageData, {}>({
 
   /**
    * 加载推荐酒店
+   * 根据当前筛选条件加载酒店列表
    */
   async loadRecommendHotels() {
     try {
       this.setData({ loading: true });
 
-      // 获取推荐酒店（前6个）
-      const response = await hotelApi.getHotelList({
+      const { starRating, priceRange, selectedTags } = this.data;
+
+      // 构造查询参数
+      const params: any = {
         page: 1,
         pageSize: 6,
-      });
+      };
+
+      // 添加星级筛选
+      if (starRating > 0) {
+        params.starRating = starRating;
+      }
+
+      // 添加价格筛选
+      if (priceRange !== '不限') {
+        params.priceRange = priceRange;
+      }
+
+      // 添加设施标签筛选
+      if (selectedTags.length > 0) {
+        params.tags = selectedTags.join(',');
+      }
+
+      // 获取推荐酒店
+      const response = await hotelApi.getHotelList(params);
 
       const hotels = response.data || [];
 
@@ -247,6 +268,9 @@ Page<SearchPageData, {}>({
     this.setData({
       starRating,
     });
+    
+    // 重新加载推荐酒店
+    this.loadRecommendHotels();
   },
 
   /**
@@ -257,6 +281,9 @@ Page<SearchPageData, {}>({
     this.setData({
       priceRange,
     });
+    
+    // 重新加载推荐酒店
+    this.loadRecommendHotels();
   },
 
   /**
@@ -278,6 +305,9 @@ Page<SearchPageData, {}>({
     this.setData({
       selectedTags: [...selectedTags],
     });
+    
+    // 重新加载推荐酒店
+    this.loadRecommendHotels();
   },
 
   /**
