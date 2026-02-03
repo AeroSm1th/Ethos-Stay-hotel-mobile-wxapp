@@ -414,14 +414,132 @@ Page<ListPageData, {}>({
   /**
    * 切换排序方式
    */
-  handleSort(e: any) {
+  async handleSort(e: any) {
     const { sortby } = e.currentTarget.dataset;
-    console.log('切换排序方式:', sortby);
+    const { sortBy, allHotels } = this.data;
 
+    // 如果点击的是当前排序方式,不做任何操作
+    if (sortby === sortBy) {
+      console.log('已经是当前排序方式,无需重复操作');
+      return;
+    }
+
+    console.log('切换排序方式:', sortby);
     this.setData({ sortBy: sortby });
 
-    // 执行本地排序
-    this.sortHotels(sortby);
+    // 如果是价格排序，需要加载所有数据
+    if (sortby === 'price') {
+      await this.loadAllHotelsAndSort(sortby);
+    } else {
+      // 其他排序方式
+      // 如果已经加载了所有数据(hasMore=false),直接对现有数据排序
+      // 否则,对当前已加载的数据排序
+      if (allHotels.length > 0) {
+        this.sortHotels(sortby);
+      } else {
+        // 如果没有数据,重新加载
+        this.setData({ page: 1, hasMore: true });
+        this.loadHotels(false);
+      }
+    }
+  },
+
+  /**
+   * 加载所有酒店数据并排序
+   */
+  async loadAllHotelsAndSort(sortBy: string) {
+    const { filters } = this.data;
+
+    console.log('加载所有酒店数据进行排序');
+
+    // 显示加载提示
+    wx.showLoading({ title: '排序中...' });
+    this.setData({ loading: true });
+
+    try {
+      // 第一步：先获取总数（使用小的 pageSize）
+      const firstResponse = await hotelApi.getHotelList({
+        page: 1,
+        pageSize: 1,
+        keyword: filters.keyword || undefined,
+        city: filters.city || undefined,
+        starRating: filters.starRating || undefined,
+        minPrice: filters.minPrice,
+        maxPrice: filters.maxPrice,
+      });
+
+      const totalCount = firstResponse.total;
+      console.log('酒店总数:', totalCount);
+
+      if (totalCount === 0) {
+        this.setData({
+          allHotels: [],
+          hotels: [],
+          total: 0,
+          hasMore: false,
+          loading: false,
+          error: '暂无符合条件的酒店',
+        });
+        wx.hideLoading();
+        return;
+      }
+
+      // 第二步：一次性加载所有数据
+      const response = await hotelApi.getHotelList({
+        page: 1,
+        pageSize: totalCount,
+        keyword: filters.keyword || undefined,
+        city: filters.city || undefined,
+        starRating: filters.starRating || undefined,
+        minPrice: filters.minPrice,
+        maxPrice: filters.maxPrice,
+      });
+
+      console.log('加载完成，酒店数量:', response.data.length);
+
+      // 对所有数据进行排序
+      const sortedHotels = this.applySorting(response.data, sortBy);
+
+      // 应用标签筛选
+      const { selectedTags } = this.data;
+      let displayHotels = sortedHotels;
+      if (selectedTags.length > 0) {
+        displayHotels = sortedHotels.filter((hotel) => {
+          if (!hotel.facilities || hotel.facilities.length === 0) {
+            return false;
+          }
+          return selectedTags.every((tag) => hotel.facilities!.includes(tag));
+        });
+      }
+
+      // 提取快捷标签
+      const quickTags = this.extractQuickTags(sortedHotels);
+
+      // 更新数据
+      this.setData({
+        allHotels: sortedHotels,
+        hotels: displayHotels,
+        total: totalCount,
+        hasMore: false, // 已加载所有数据
+        loading: false,
+        error: '',
+        quickTags,
+      });
+
+      console.log('排序完成');
+    } catch (error: any) {
+      console.error('加载数据失败:', error);
+      wx.showToast({
+        title: '排序失败',
+        icon: 'none',
+      });
+      this.setData({ 
+        loading: false,
+        error: error.message || '加载失败，请稍后重试',
+      });
+    } finally {
+      wx.hideLoading();
+    }
   },
 
   /**
