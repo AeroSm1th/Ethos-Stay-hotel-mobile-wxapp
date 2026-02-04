@@ -5,11 +5,9 @@
   <view class="filter-header" bindtap="toggleFilterPanel">
     <view class="filter-info">
       <view class="filter-item">
-        <text class="filter-icon">📍</text>
         <text class="city">{{filters.city}}</text>
       </view>
       <view class="filter-item">
-        <text class="filter-icon">📅</text>
         <text class="date">{{filters.checkIn}}</text>
         <text class="date-separator">至</text>
         <text class="date">{{filters.checkOut}}</text>
@@ -73,7 +71,7 @@
     <view class="city-picker-content" catchtap="{{null}}">
       <view class="city-picker-header">
         <text class="city-picker-title">选择城市</text>
-        <text class="city-picker-close" bindtap="hideCityPicker">✕</text>
+        <text class="city-picker-close" bindtap="hideCityPicker">×</text>
       </view>
       <view class="city-list">
         <view 

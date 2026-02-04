@@ -14,7 +14,6 @@
       <text class="date-picker__label" wx:if="{{label}}">{{label}}</text>
       <view class="date-picker__value">
         <text class="date-picker__text">{{displayValue}}</text>
-        <text class="date-picker__icon">📅</text>
       </view>
     </view>
   </picker>

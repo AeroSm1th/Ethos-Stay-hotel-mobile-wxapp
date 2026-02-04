@@ -17,7 +17,6 @@
     <!-- 城市选择 -->
     <view class="form-item">
       <view class="form-label">
-        <text class="icon">📍</text>
         <text>城市</text>
       </view>
       <view class="form-value" bindtap="showCityPicker">
@@ -29,7 +28,6 @@
     <!-- 日期选择 -->
     <view class="form-item">
       <view class="form-label">
-        <text class="icon">📅</text>
         <text>入住</text>
       </view>
       <view class="form-value">
@@ -39,7 +37,6 @@
 
     <view class="form-item">
       <view class="form-label">
-        <text class="icon">📅</text>
         <text>离店</text>
       </view>
       <view class="form-value">
@@ -54,7 +51,6 @@
     <!-- 关键词搜索 -->
     <view class="form-item">
       <view class="form-label">
-        <text class="icon">🔍</text>
         <text>关键词</text>
       </view>
       <view class="form-value">
@@ -69,7 +65,6 @@
 
     <!-- GPS 定位按钮 -->
     <view class="gps-button" bindtap="handleGpsLocation">
-      <text class="icon">📍</text>
       <text>使用当前位置</text>
     </view>
 
@@ -142,7 +137,7 @@
     <view class="city-picker-content" catchtap="{{null}}">
       <view class="city-picker-header">
         <text class="city-picker-title">选择城市</text>
-        <text class="city-picker-close" bindtap="hideCityPicker">✕</text>
+        <text class="city-picker-close" bindtap="hideCityPicker">×</text>
       </view>
       <view class="city-list">
         <view 

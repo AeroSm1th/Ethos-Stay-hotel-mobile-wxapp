@@ -30,7 +30,6 @@
 
     <!-- 酒店地址 -->
     <view class="hotel-card__address">
-      <text class="hotel-card__address-icon">📍</text>
       <text class="hotel-card__address-text">{{hotel.address}}</text>
     </view>
 

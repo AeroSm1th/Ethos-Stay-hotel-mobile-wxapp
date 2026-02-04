@@ -44,7 +44,6 @@
         <text class="star-text">{{hotel.starRating}}星级</text>
       </view>
       <view class="hotel-address">
-        <text class="icon-location">📍</text>
         <text class="address-text">{{hotel.address}}</text>
       </view>
       <view class="hotel-rating">
