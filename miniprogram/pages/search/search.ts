@@ -487,7 +487,14 @@ Page<SearchPageData, Record<string, never>>({
    * 处理酒店卡片点击
    */
   handleHotelClick(e: WechatMiniprogram.CustomEvent) {
-    const hotel = e.detail.hotel as Hotel;
+    // 从 dataset 或 detail 中获取酒店数据
+    const hotel = e.currentTarget?.dataset?.hotel || e.detail?.hotel;
+    
+    if (!hotel || !hotel.id) {
+      console.error('酒店数据不存在');
+      return;
+    }
+
     const { checkIn, checkOut } = this.data;
 
     wx.navigateTo({
