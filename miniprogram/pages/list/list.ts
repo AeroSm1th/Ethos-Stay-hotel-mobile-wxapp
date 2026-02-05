@@ -214,8 +214,8 @@ Page<ListPageData, Record<string, never>>({
       // 合并数据
       let allHotels = append ? [...this.data.allHotels, ...response.data] : response.data;
       
-      // 如果有排序，对所有酒店进行排序
-      if (sortBy && sortBy !== 'popular') {
+      // 始终应用排序（包括受欢迎度排序）
+      if (sortBy) {
         console.log('应用排序:', sortBy);
         allHotels = this.applySorting(allHotels, sortBy);
       }
