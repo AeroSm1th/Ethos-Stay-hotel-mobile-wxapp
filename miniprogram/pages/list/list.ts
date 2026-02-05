@@ -622,13 +622,14 @@ Page<ListPageData, Record<string, never>>({
 
     switch (sortBy) {
       case 'popular':
-        // 欢迎度排序（按 ID 升序，模拟欢迎度）
+        // 欢迎度排序（按 ID 升序，ID 越小表示越受欢迎）
         sortedHotels.sort((a, b) => a.id - b.id);
         break;
 
       case 'distance':
-        // 位置距离排序（按 ID 升序，模拟距离）
-        sortedHotels.sort((a, b) => a.id - b.id);
+        // 位置距离排序（按 ID 降序，模拟距离远近）
+        // ID 越大表示距离越近（与欢迎度相反的顺序）
+        sortedHotels.sort((a, b) => b.id - a.id);
         break;
 
       case 'price':
