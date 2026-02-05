@@ -363,30 +363,27 @@ Page<SearchPageData, Record<string, never>>({
    */
   handleTagToggle(e: WechatMiniprogram.TouchEvent) {
     const tag = e.currentTarget.dataset.tag as string;
-    const { selectedTags } = this.data;
+    const { city, checkIn, checkOut } = this.data;
 
     console.log('=== 首页标签点击 ===');
     console.log('点击的标签:', tag);
-    console.log('点击前 selectedTags:', JSON.stringify(selectedTags));
 
-    const index = selectedTags.indexOf(tag);
-    if (index > -1) {
-      // 已选中，取消选中
-      selectedTags.splice(index, 1);
-      console.log('取消选中，新数组:', JSON.stringify(selectedTags));
-    } else {
-      // 未选中，添加选中
-      selectedTags.push(tag);
-      console.log('添加选中，新数组:', JSON.stringify(selectedTags));
-    }
+    // 构造查询参数,直接跳转到列表页
+    const params: Record<string, string> = {
+      city,
+      checkIn,
+      checkOut,
+      tags: tag, // 直接传递单个标签
+    };
 
-    this.setData({
-      selectedTags: [...selectedTags],
-    }, () => {
-      console.log('setData 完成后 data.selectedTags:', JSON.stringify(this.data.selectedTags));
+    // 跳转到列表页
+    const queryString = Object.keys(params)
+      .map(key => `${key}=${encodeURIComponent(params[key])}`)
+      .join('&');
+
+    wx.navigateTo({
+      url: `/pages/list/list?${queryString}`,
     });
-    
-    // 不立即重新加载推荐酒店，只在点击"搜索酒店"按钮时才筛选
   },
 
   /**
