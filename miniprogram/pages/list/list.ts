@@ -767,7 +767,10 @@ Page<ListPageData, Record<string, never>>({
 
     if (tags.length === 0) {
       // 没有选中标签，显示所有酒店
-      this.setData({ hotels: allHotels });
+      this.setData({ 
+        hotels: allHotels,
+        total: allHotels.length,
+      });
     } else {
       // 筛选包含所有选中标签的酒店
       const filteredHotels = allHotels.filter((hotel) => {
@@ -778,7 +781,10 @@ Page<ListPageData, Record<string, never>>({
         return tags.every((tag) => hotel.facilities!.includes(tag));
       });
 
-      this.setData({ hotels: filteredHotels });
+      this.setData({ 
+        hotels: filteredHotels,
+        total: filteredHotels.length,
+      });
     }
   },
 
