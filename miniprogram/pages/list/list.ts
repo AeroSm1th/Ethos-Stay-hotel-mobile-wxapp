@@ -18,7 +18,8 @@ import { showError } from '../../utils/toast';
  */
 interface ListPageData {
   hotels: Hotel[];           // 酒店列表
-  total: number;             // 总数
+  total: number;             // 总数(显示用,会根据筛选变化)
+  originalTotal: number;     // API 返回的原始总数
   page: number;              // 当前页码
   pageSize: number;          // 每页数量
   hasMore: boolean;          // 是否有更多数据
@@ -49,6 +50,7 @@ Page<ListPageData, Record<string, never>>({
   data: {
     hotels: [],
     total: 0,
+    originalTotal: 0,
     page: 1,
     pageSize: PAGE_SIZE,
     hasMore: true,
@@ -239,7 +241,8 @@ Page<ListPageData, Record<string, never>>({
       this.setData({
         hotels: displayHotels,
         allHotels,
-        total: response.total,
+        total: selectedTags.length > 0 ? displayHotels.length : response.total,
+        originalTotal: response.total,
         hasMore,
         loading: false,
         loadingMore: false,
@@ -763,13 +766,13 @@ Page<ListPageData, Record<string, never>>({
    * 根据标签筛选酒店
    */
   filterHotelsByTags(tags: string[]) {
-    const { allHotels } = this.data;
+    const { allHotels, originalTotal } = this.data;
 
     if (tags.length === 0) {
-      // 没有选中标签，显示所有酒店
+      // 没有选中标签，显示所有酒店,恢复原始总数
       this.setData({ 
         hotels: allHotels,
-        total: allHotels.length,
+        total: originalTotal,
       });
     } else {
       // 筛选包含所有选中标签的酒店
