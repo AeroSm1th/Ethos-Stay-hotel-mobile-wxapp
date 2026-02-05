@@ -158,12 +158,13 @@ Page<SearchPageData, Record<string, never>>({
       this.setData({ loading: true });
       console.log('设置 loading = true');
 
-      const { starRating, priceRange, selectedTags } = this.data;
+      const { city, starRating, priceRange, selectedTags } = this.data;
 
       // 构造查询参数
       const params: any = {
         page: 1,
         pageSize: 6,
+        city, // 添加城市参数
       };
 
       // 添加星级筛选
@@ -263,6 +264,9 @@ Page<SearchPageData, Record<string, never>>({
     
     // 保存到本地存储
     storage.saveRecentCity(city);
+    
+    // 重新加载推荐酒店
+    this.loadRecommendHotels();
   },
 
   /**
@@ -405,6 +409,9 @@ Page<SearchPageData, Record<string, never>>({
         storage.saveRecentCity(mockCity);
         
         showSuccess(`定位到${mockCity}`);
+        
+        // 重新加载推荐酒店
+        this.loadRecommendHotels();
       },
       fail: (error) => {
         console.error('定位失败:', error);
